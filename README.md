@@ -1,4 +1,4 @@
-# Tommy Chung | Full-Stack Developer
+# Tommy Chung | Full-Stack AI Developer
 
 A premium, minimalist personal portfolio website built with React Router 7 and Tailwind CSS 4.
 
