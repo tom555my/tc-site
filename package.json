@@ -10,6 +10,8 @@
 		"cf-typegen": "wrangler types",
 		"deploy": "pnpm run build && wrangler deploy",
 		"dev": "react-router dev",
+		"lint": "oxlint app",
+		"format": "oxlint --fix app",
 		"postinstall": "npm run cf-typegen",
 		"preview": "pnpm run build && vite preview",
 		"typecheck": "npm run cf-typegen && react-router typegen && tsc -b"
@@ -30,6 +32,7 @@
 		"@types/node": "^22",
 		"@types/react": "^19.1.13",
 		"@types/react-dom": "^19.1.9",
+		"oxlint": "^1.33.0",
 		"tailwindcss": "^4.1.13",
 		"typescript": "^5.9.2",
 		"vite": "^7.1.7",

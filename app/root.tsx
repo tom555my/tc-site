@@ -21,6 +21,7 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Geist+Mono:wght@400;600&family=Gloria+Hallelujah&display=swap",
   },
+  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

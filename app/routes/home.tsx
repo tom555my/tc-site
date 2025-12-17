@@ -1,10 +1,9 @@
-import type { Route } from "./+types/home";
 import { Hero } from "../components/Hero";
 import { Experience } from "../components/Experience";
 import { Projects } from "../components/Projects";
 import { Skills } from "../components/Skills";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Tommy Chung | Full-Stack Developer" },
     { name: "description", content: "Portfolio of Tommy Chung - Full-Stack Developer & Data Science Engineer" },
@@ -15,7 +14,7 @@ export default function Home() {
   return (
     <div className="space-y-24">
       <Hero />
-      
+
       <section>
         <h2 className="text-sm font-semibold text-accent-blue uppercase tracking-widest mb-12 border-b border-white/5 pb-2">
           Experience
