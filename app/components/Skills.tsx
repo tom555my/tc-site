@@ -1,10 +1,30 @@
 import { motion } from "framer-motion";
-import { 
-  SiJavascript, SiTypescript, SiNodedotjs, SiReact, SiNextdotjs, 
-  SiReactrouter, SiExpress, SiKoa, SiPython, SiPandas,
-  SiMysql, SiPostgresql, SiMongodb, SiMariadb, SiCloudflare,
-  SiAmazonwebservices, SiDocker, SiKubernetes, SiGooglecloud,
-  SiGit, SiVercel, SiN8N, SiExpo, SiHasura, SiSst
+import {
+  SiJavascript,
+  SiTypescript,
+  SiNodedotjs,
+  SiReact,
+  SiNextdotjs,
+  SiReactrouter,
+  SiExpress,
+  SiKoa,
+  SiPython,
+  SiPandas,
+  SiMysql,
+  SiPostgresql,
+  SiMongodb,
+  SiMariadb,
+  SiCloudflare,
+  SiAmazonwebservices,
+  SiDocker,
+  SiKubernetes,
+  SiGooglecloud,
+  SiGit,
+  SiVercel,
+  SiN8N,
+  SiExpo,
+  SiHasura,
+  SiSst,
 } from "react-icons/si";
 
 const skillCategories = [
@@ -21,8 +41,8 @@ const skillCategories = [
       { name: "ExpressJS", icon: SiExpress },
       { name: "Koa.js", icon: SiKoa },
       { name: "Python", icon: SiPython },
-      { name: "Pandas", icon: SiPandas }
-    ]
+      { name: "Pandas", icon: SiPandas },
+    ],
   },
   {
     title: "Databases",
@@ -31,8 +51,8 @@ const skillCategories = [
       { name: "Postgresql", icon: SiPostgresql },
       { name: "MongoDB", icon: SiMongodb },
       { name: "MariaDB", icon: SiMariadb },
-      { name: "D1 (SQLite)", icon: SiCloudflare }
-    ]
+      { name: "D1 (SQLite)", icon: SiCloudflare },
+    ],
   },
   {
     title: "Cloud & Infrastructure",
@@ -42,8 +62,8 @@ const skillCategories = [
       { name: "Docker", icon: SiDocker },
       { name: "Kubernetes", icon: SiKubernetes },
       { name: "GCP Cloud Function", icon: SiGooglecloud },
-      { name: "Cloudflare", icon: SiCloudflare }
-    ]
+      { name: "Cloudflare", icon: SiCloudflare },
+    ],
   },
   {
     title: "Tools",
@@ -52,9 +72,9 @@ const skillCategories = [
       { name: "Vercel", icon: SiVercel },
       { name: "n8n", icon: SiN8N },
       { name: "Expo", icon: SiExpo },
-      { name: "Hasura (GraphQL)", icon: SiHasura }
-    ]
-  }
+      { name: "Hasura (GraphQL)", icon: SiHasura },
+    ],
+  },
 ];
 
 export function Skills() {

@@ -6,7 +6,10 @@ import { Skills } from "../components/Skills";
 export function meta() {
   return [
     { title: "Tommy Chung | Full-Stack Developer" },
-    { name: "description", content: "Portfolio of Tommy Chung - Full-Stack Developer & Data Science Engineer" },
+    {
+      name: "description",
+      content: "Portfolio of Tommy Chung - Full-Stack Developer & Data Science Engineer",
+    },
   ];
 }
 

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Globe, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, Globe } from "lucide-react";
 
 const socialLinks = [
   { icon: Globe, href: "https://tommy-chung.com", label: "website" },
@@ -20,8 +20,8 @@ export function Hero() {
         <h1 className="text-3xl font-bold tracking-tight mb-2">Tommy Chung</h1>
         <p className="text-lg text-muted mb-4">Full-Stack Developer</p>
         <p className="text-sm text-muted/80 max-w-md">
-          Based in Toronto, Canada. Senior Data Science Engineer at Robots and Pencils.
-          Passionate about Generative AI, Web Development, and building scalable solutions.
+          Based in Toronto, Canada. Senior Data Science Engineer at Robots and Pencils. Passionate
+          about Generative AI, Web Development, and building scalable solutions.
         </p>
       </motion.div>
 
