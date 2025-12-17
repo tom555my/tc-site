@@ -1,17 +1,45 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { Hero } from "../components/Hero";
+import { Experience } from "../components/Experience";
+import { Projects } from "../components/Projects";
+import { Skills } from "../components/Skills";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Tommy Chung | Full-Stack Developer" },
+    { name: "description", content: "Portfolio of Tommy Chung - Full-Stack Developer & Data Science Engineer" },
   ];
 }
 
-export function loader({ context }: Route.LoaderArgs) {
-  return { message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE };
-}
+export default function Home() {
+  return (
+    <div className="space-y-24">
+      <Hero />
+      
+      <section>
+        <h2 className="text-sm font-semibold text-accent-blue uppercase tracking-widest mb-12 border-b border-white/5 pb-2">
+          Experience
+        </h2>
+        <Experience />
+      </section>
 
-export default function Home({ loaderData }: Route.ComponentProps) {
-  return <Welcome message={loaderData.message} />;
+      <section>
+        <h2 className="text-sm font-semibold text-accent-blue uppercase tracking-widest mb-12 border-b border-white/5 pb-2">
+          Projects
+        </h2>
+        <Projects />
+      </section>
+
+      <section>
+        <h2 className="text-sm font-semibold text-accent-blue uppercase tracking-widest mb-12 border-b border-white/5 pb-2">
+          Skills
+        </h2>
+        <Skills />
+      </section>
+
+      <footer className="pt-24 pb-12 text-center text-[11px] text-muted/30 uppercase tracking-[0.2em]">
+        © {new Date().getFullYear()} Tommy Chung • Built with React Router & Tailwind
+      </footer>
+    </div>
+  );
 }
