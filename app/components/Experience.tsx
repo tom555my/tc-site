@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const experiences = [
 	{
 		company: 'Robots and Pencils ULC',
-		location: 'Canada',
+		location: '🇨🇦 Canada',
 		period: 'June 2024 – Current',
 		role: 'Senior Data Science Engineer',
 		description: [
@@ -14,7 +14,7 @@ const experiences = [
 	},
 	{
 		company: 'Caribou Technology Limited',
-		location: 'Freelance / Remote',
+		location: '🌐 Freelance / Remote',
 		period: 'Aug 2023 – June 2024',
 		role: 'Lead Developer',
 		description: [
@@ -25,7 +25,7 @@ const experiences = [
 	},
 	{
 		company: 'Mad Head App Limited',
-		location: 'Hong Kong',
+		location: '🇭🇰 Hong Kong',
 		period: 'June 2022 – June 2023',
 		role: 'Senior Programmer',
 		description: [
@@ -36,7 +36,7 @@ const experiences = [
 	},
 	{
 		company: 'PrimeCredit',
-		location: 'Hong Kong',
+		location: '🇭🇰 Hong Kong',
 		period: 'April 2021 – April 2022',
 		role: 'Data Scientist',
 		description: [
@@ -47,7 +47,7 @@ const experiences = [
 	},
 	{
 		company: 'DataTech.ai',
-		location: 'Hong Kong',
+		location: '🇭🇰 Hong Kong',
 		period: 'June 2019 – April 2021',
 		role: 'Data Scientist',
 		description: [
