@@ -1,79 +1,85 @@
-# Welcome to React Router!
+# Tommy Chung | Full-Stack Developer
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A premium, minimalist personal portfolio website built with React Router 7 and Tailwind CSS 4.
 
-## Features
+## 🚀 Tech Stack
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- **Core**: [React Router 7](https://reactrouter.com/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
+- **Deployment**: [Cloudflare Pages](https://pages.cloudflare.com/)
 
-## Getting Started
+## 🛠 Tooling
+
+- **Package Manager**: [pnpm](https://pnpm.io/)
+- **Linter**: [oxlint](https://oxc.rs/docs/guide/usage/linter.html) (Fastest JS linter)
+- **Formatter**: [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) (Fastest JS formatter)
+- **Version Management**: Enforced Node.js >= 24
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+Ensure you are using **Node.js v24** or higher. You can use `nvm` to switch:
+
+```bash
+nvm use
+```
 
 ### Installation
 
-Install the dependencies:
+Install dependencies using `pnpm`:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
 
-Start the development server with HMR:
+Start the development server:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+The site will be available at `http://localhost:5173`.
 
-## Previewing the Production Build
+### Linting & Formatting
 
-Preview the production build locally:
+Clean and format the code using high-performance Rust-based tools:
 
 ```bash
-npm run preview
+# Run linter
+pnpm run lint
+
+# Run formatter
+pnpm run format
 ```
 
-## Building for Production
+## 🏗 Project Structure
+
+- `app/components/`: Reusable UI components (Hero, Experience, Projects, Skills).
+- `app/routes/`: Page routes.
+- `app/app.css`: Global styles and Tailwind 4 design tokens.
+- `public/`: Static assets (favicon, etc.).
+
+## 📦 Building for Production
 
 Create a production build:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
-## Deployment
+## ☁️ Deployment
 
-Deployment is done using the Wrangler CLI.
+Deploy to Cloudflare:
 
-To build and deploy directly to production:
-
-```sh
-npm run deploy
+```bash
+pnpm run deploy
 ```
-
-To deploy a preview URL:
-
-```sh
-npx wrangler versions upload
-```
-
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
-npx wrangler versions deploy
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️ by Tommy Chung.
