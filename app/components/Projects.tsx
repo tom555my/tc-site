@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Github } from 'lucide-react';
 
 const projects = [
 	{
@@ -9,6 +9,9 @@ const projects = [
 		status: 'Completed',
 		tags: ['Expo', 'React Native', 'Hasura', 'Postgresql'],
 		type: 'Freelance',
+		links: {
+			github: 'https://github.com/tommychung/marketplace-api',
+		},
 	},
 	{
 		title: 'Group Expenses Calculator (Web)',
@@ -17,7 +20,10 @@ const projects = [
 		status: 'Live',
 		tags: ['Remix', 'Cloudflare Pages', 'D1', 'Durable Objects'],
 		type: 'Side Project',
-		demo: 'https://splity.io',
+		links: {
+			demo: 'https://splity.io',
+			github: 'https://github.com/tommychung/splity',
+		},
 	},
 ];
 
@@ -42,15 +48,27 @@ export function Projects() {
 								className={`w-1.5 h-1.5 rounded-full ${project.status === 'Live' || project.status === 'Completed' ? 'bg-accent-green' : 'bg-accent-orange'}`}
 							/>
 						</div>
-						<div className="flex items-center gap-4 text-muted/40 group-hover:text-muted transition-colors">
-							{project.demo && (
+						<div className="flex items-center gap-4">
+							{project.links?.demo && (
 								<a
-									href={project.demo}
+									href={project.links.demo}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="hover:text-white transition-colors"
+									className="text-muted/40 hover:text-primary transition-colors"
+									aria-label={`View live demo of ${project.title}`}
 								>
-									<ExternalLink size={16} />
+									<ExternalLink className="w-4 h-4" />
+								</a>
+							)}
+							{project.links?.github && (
+								<a
+									href={project.links.github}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-muted/40 hover:text-primary transition-colors"
+									aria-label={`View source code of ${project.title} on GitHub`}
+								>
+									<Github className="w-4 h-4" />
 								</a>
 							)}
 						</div>
