@@ -35,7 +35,7 @@ export function Projects() {
 				>
 					<div className="flex items-center justify-between mb-2">
 						<div className="flex items-center gap-3">
-							<h3 className="text-white font-semibold group-hover:text-accent-blue transition-colors">
+							<h3 className="text-white font-semibold group-hover:text-primary transition-colors">
 								{project.title}
 							</h3>
 							<span

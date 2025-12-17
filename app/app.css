@@ -4,7 +4,7 @@
 	--color-background: #000000;
 	--color-foreground: #d0d0d0;
 	--color-muted: #979797;
-	--color-accent-blue: #8ab5f5;
+	--color-primary: #e36414;
 	--color-accent-orange: #f59e0b;
 	--color-accent-green: #10b981;
 
@@ -19,13 +19,13 @@
 
 @layer base {
 	body {
-		@apply bg-background text-foreground font-mono selection:bg-accent-blue/30;
+		@apply bg-background text-foreground font-mono selection:bg-primary/30;
 		min-height: 100vh;
 		position: relative;
 		overflow-x: hidden;
 	}
 
-	/* The "blue glow" radial gradient inspired by aniqa.dev */
+	/* The background glow adjusted to the new primary color */
 	body::before {
 		content: '';
 		position: fixed;
@@ -35,7 +35,7 @@
 		height: 100%;
 		background: radial-gradient(
 			circle at 50% -20%,
-			rgba(138, 181, 245, 0.15) 0%,
+			rgba(227, 100, 20, 0.15) 0%,
 			rgba(0, 0, 0, 0) 70%
 		);
 		pointer-events: none;

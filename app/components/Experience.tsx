@@ -71,7 +71,7 @@ export function Experience() {
 					className="group relative"
 				>
 					<div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-2">
-						<h3 className="text-white font-semibold group-hover:text-accent-blue transition-colors">
+						<h3 className="text-white font-semibold group-hover:text-primary transition-colors">
 							{exp.company}
 						</h3>
 						<span className="text-xs text-muted/60 font-mono italic">
@@ -91,7 +91,7 @@ export function Experience() {
 								key={i}
 								className="text-sm text-muted/80 leading-relaxed flex items-start gap-2"
 							>
-								<span className="mt-1.5 w-1 h-1 rounded-full bg-accent-blue/30 shrink-0" />
+								<span className="mt-1.5 w-1 h-1 rounded-full bg-primary/30 shrink-0" />
 								{item}
 							</li>
 						))}

@@ -96,7 +96,7 @@ export function Skills() {
 						{cat.skills.map((skill) => (
 							<span
 								key={skill.name}
-								className="flex items-center gap-2 text-[13px] text-muted/80 px-2.5 py-1.5 rounded bg-white/[0.03] border border-white/5 hover:border-accent-blue/30 hover:text-accent-blue transition-all"
+								className="flex items-center gap-2 text-[13px] text-muted/80 px-2.5 py-1.5 rounded bg-white/[0.03] border border-white/5 hover:border-primary/30 hover:text-primary transition-all"
 							>
 								<skill.icon className="w-3.5 h-3.5" />
 								{skill.name}
