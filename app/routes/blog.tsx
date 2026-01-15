@@ -11,10 +11,54 @@ export async function loader() {
 
 export function meta() {
 	return [
-		{ title: 'Blog | Tommy Chung' },
+		{ title: 'Blog | Full-Stack Development, AI & Web Technology' },
 		{
 			name: 'description',
-			content: 'Thoughts on AI, web development, and technology.',
+			content:
+				'Expert insights on full-stack development, generative AI, React, TypeScript, and modern web architecture. In-depth tutorials, best practices, and technical deep-dives.',
+		},
+		{
+			name: 'keywords',
+			content:
+				'web development blog, AI articles, React tutorials, TypeScript, full-stack, Cloudflare, best practices, technical writing',
+		},
+		{
+			property: 'og:type',
+			content: 'website',
+		},
+		{
+			property: 'og:title',
+			content: 'Blog | Full-Stack Development, AI & Web Technology',
+		},
+		{
+			property: 'og:description',
+			content:
+				'Expert insights on full-stack development, generative AI, React, TypeScript, and modern web architecture. In-depth tutorials, best practices, and technical deep-dives.',
+		},
+		{
+			property: 'og:image',
+			content: 'https://tommy-chung.com/og-image-blog',
+		},
+		{
+			property: 'og:url',
+			content: 'https://tommy-chung.com/blog',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+		{
+			name: 'twitter:title',
+			content: 'Blog | Full-Stack Development, AI & Web Technology',
+		},
+		{
+			name: 'twitter:description',
+			content:
+				'Expert insights on full-stack development, generative AI, React, TypeScript, and modern web architecture. In-depth tutorials, best practices, and technical deep-dives.',
+		},
+		{
+			name: 'twitter:image',
+			content: 'https://tommy-chung.com/og-image-blog',
 		},
 	];
 }

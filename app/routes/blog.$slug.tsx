@@ -31,9 +31,77 @@ export function meta({ data }: { data?: { post?: BlogPostType } }) {
 		return [{ title: 'Post Not Found | Tommy Chung' }];
 	}
 
+	const post = data.post;
+	const siteUrl = 'https://tommy-chung.com';
+	const postUrl = `${siteUrl}/blog/${post.slug}`;
+	const ogImageUrl = `${siteUrl}/og-image/${post.slug}`;
+
+	const articleTags = post.tags
+		? post.tags.map((tag: string) => ({
+				property: 'article:tag',
+				content: tag,
+			}))
+		: [];
+
 	return [
-		{ title: `${data.post.title} | Tommy Chung` },
-		{ name: 'description', content: data.post.excerpt },
+		{ title: `${post.title} | Tommy Chung` },
+		{ name: 'description', content: post.excerpt },
+		{ name: 'keywords', content: post.tags ? post.tags.join(', ') : '' },
+		{ name: 'author', content: 'Tommy Chung' },
+		{ name: 'publish_date', content: post.date },
+		{
+			property: 'og:type',
+			content: 'article',
+		},
+		{
+			property: 'og:title',
+			content: `${post.title} | Tommy Chung`,
+		},
+		{
+			property: 'og:description',
+			content: post.excerpt,
+		},
+		{
+			property: 'og:image',
+			content: ogImageUrl,
+		},
+		{
+			property: 'og:url',
+			content: postUrl,
+		},
+		{
+			property: 'article:author',
+			content: 'Tommy Chung',
+		},
+		{
+			property: 'article:published_time',
+			content: post.date,
+		},
+		{
+			property: 'article:section',
+			content: 'Technology',
+		},
+		...articleTags,
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+		{
+			name: 'twitter:title',
+			content: `${post.title} | Tommy Chung`,
+		},
+		{
+			name: 'twitter:description',
+			content: post.excerpt,
+		},
+		{
+			name: 'twitter:image',
+			content: ogImageUrl,
+		},
+		{
+			name: 'twitter:creator',
+			content: '@tommychung',
+		},
 	];
 }
 

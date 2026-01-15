@@ -5,11 +5,58 @@ import { Skills } from '../components/Skills';
 
 export function meta() {
 	return [
-		{ title: 'Tommy Chung | Full-Stack AI Developer' },
+		{ title: 'Tommy Chung | Full-Stack AI Developer & Data Scientist' },
 		{
 			name: 'description',
 			content:
-				'Portfolio of Tommy Chung - Full-Stack AI Developer & Data Science Engineer',
+				'Senior Data Engineer & full-stack developer building scalable AI solutions. Explore projects, experience, and insights on React, TypeScript, and cloud infrastructure.',
+		},
+		{
+			name: 'keywords',
+			content:
+				'full-stack developer, AI developer, data science engineer, React, TypeScript, Cloudflare, AWS, web development, Toronto',
+		},
+		{
+			name: 'author',
+			content: 'Tommy Chung',
+		},
+		{
+			property: 'og:type',
+			content: 'website',
+		},
+		{
+			property: 'og:title',
+			content: 'Tommy Chung | Full-Stack AI Developer & Data Scientist',
+		},
+		{
+			property: 'og:description',
+			content:
+				'Senior Data Engineer & full-stack developer building scalable AI solutions. Explore projects, experience, and insights on React, TypeScript, and cloud infrastructure.',
+		},
+		{
+			property: 'og:image',
+			content: 'https://tommy-chung.com/og-image-home',
+		},
+		{
+			property: 'og:url',
+			content: 'https://tommy-chung.com/',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+		{
+			name: 'twitter:title',
+			content: 'Tommy Chung | Full-Stack AI Developer & Data Scientist',
+		},
+		{
+			name: 'twitter:description',
+			content:
+				'Senior Data Engineer & full-stack developer building scalable AI solutions. Explore projects, experience, and insights on React, TypeScript, and cloud infrastructure.',
+		},
+		{
+			name: 'twitter:image',
+			content: 'https://tommy-chung.com/og-image-home',
 		},
 	];
 }
