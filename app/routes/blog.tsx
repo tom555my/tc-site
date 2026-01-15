@@ -36,7 +36,10 @@ export default function Blog({ loaderData }: BlogProps) {
 				>
 					Home
 				</a>
-				<a href="/blog" className="text-sm font-medium text-white transition-colors">
+				<a
+					href="/blog"
+					className="text-sm font-medium text-white transition-colors"
+				>
 					Blog
 				</a>
 			</nav>

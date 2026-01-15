@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
-import { getPostBySlug, type BlogPost as BlogPostType } from '../lib/blog.server';
+import {
+	getPostBySlug,
+	type BlogPost as BlogPostType,
+} from '../lib/blog.server';
 import { fadeInUp, springs } from '../lib/animations';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -82,10 +85,7 @@ export default function BlogPost({ loaderData }: BlogPostProps) {
 					</div>
 				</header>
 
-				<ReactMarkdown
-					remarkPlugins={[remarkGfm]}
-					rehypePlugins={[rehypeRaw]}
-				>
+				<ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
 					{post.content}
 				</ReactMarkdown>
 			</motion.article>

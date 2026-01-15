@@ -26,7 +26,12 @@ import {
 	SiHasura,
 	SiSst,
 } from 'react-icons/si';
-import { fadeInScale, staggerContainer, springs, tapScale } from '../lib/animations';
+import {
+	fadeInScale,
+	staggerContainer,
+	springs,
+	tapScale,
+} from '../lib/animations';
 
 const skillCategories = [
 	{
@@ -115,7 +120,9 @@ export function Skills() {
 								}}
 								whileTap={tapScale}
 							>
-								<motion.div whileHover={{ rotate: 360, transition: { duration: 0.5 } }}>
+								<motion.div
+									whileHover={{ rotate: 360, transition: { duration: 0.5 } }}
+								>
 									<skill.icon className="w-3.5 h-3.5" />
 								</motion.div>
 								{skill.name}

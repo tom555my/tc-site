@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
-import { fadeInUp, staggerContainer, springs, tapScale } from '../lib/animations';
+import {
+	fadeInUp,
+	staggerContainer,
+	springs,
+	tapScale,
+} from '../lib/animations';
 
 const projects = [
 	{
@@ -38,11 +43,7 @@ export function Projects() {
 			viewport={{ once: true, margin: '-50px' }}
 		>
 			{projects.map((project) => (
-				<motion.div
-					key={project.title}
-					variants={fadeInUp}
-					className="group"
-				>
+				<motion.div key={project.title} variants={fadeInUp} className="group">
 					<motion.div
 						className="border border-white/5 rounded-lg p-6 bg-surface-1 hover:bg-surface-2 transition-colors"
 						whileHover={{
