@@ -7,28 +7,37 @@ import {
 	tapScale,
 } from '../lib/animations';
 
-const projects = [
+const projects: {
+  title: string;
+  description: string;
+  status: 'Live' | 'Completed' | 'In Progress';
+  tags: string[];
+  type: 'Freelance' | 'Side Project' | 'Work Project';
+  links?: {
+    demo?: string;
+    github?: string;
+  }
+}[] = [
 	{
-		title: 'Luxury Marketplace App',
+		title: 'Amoeba 28 (Luxury Marketplace App)',
 		description:
 			'Built and deployed iOS/Android mobile app with Expo. Built API server with Hasura (GraphQL API) and Postgresql.',
 		status: 'Completed',
 		tags: ['Expo', 'React Native', 'Hasura', 'Postgresql'],
 		type: 'Freelance',
-		links: {
-			github: 'https://github.com/tommychung/marketplace-api',
-		},
+    links: {
+      demo: 'https://apps.apple.com/us/app/amoeba-28/id1630974085'
+    }
 	},
 	{
-		title: 'Group Expenses Calculator (Web)',
+		title: 'Splity.io (Group Expenses Calculator)',
 		description:
-			'Experiment to explore developing applications on Cloudflare. Built with Remix.run, Cloudflare Pages/D1 (SQLite).',
+			'Experiment to explore developing applications on Cloudflare. Built with React Router v7, Cloudflare Worker, D1 (SQLite).',
 		status: 'Live',
-		tags: ['Remix', 'Cloudflare Pages', 'D1', 'Durable Objects'],
+		tags: ['React Router v7', 'Cloudflare Worker', 'D1', 'Durable Objects'],
 		type: 'Side Project',
 		links: {
 			demo: 'https://splity.io',
-			github: 'https://github.com/tommychung/splity',
 		},
 	},
 ];
