@@ -17,6 +17,20 @@ export function meta() {
 export default function Home() {
 	return (
 		<div className="space-y-24">
+			<nav className="flex gap-6 mb-8 pb-4 border-b border-white/5">
+				<a
+					href="/"
+					className="text-sm font-medium text-white transition-colors"
+				>
+					Home
+				</a>
+				<a
+					href="/blog"
+					className="text-sm text-muted hover:text-white transition-colors"
+				>
+					Blog
+				</a>
+			</nav>
 			<Hero />
 
 			<section>

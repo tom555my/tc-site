@@ -1,0 +1,92 @@
+---
+title: "Building with React Router 7: SSR Made Simple"
+date: "2026-01-14"
+excerpt: "A deep dive into React Router 7's server-side rendering capabilities and how it simplifies building fast, SEO-friendly React applications."
+tags: ["react", "react-router", "ssr", "performance"]
+---
+
+# Building with React Router 7
+
+React Router 7 has transformed how we build React applications by making server-side rendering (SSR) a first-class citizen. Let's explore why this matters and how to get started.
+
+## Why SSR Matters
+
+Server-side rendering provides several key benefits:
+
+1. **Improved SEO** - Search engines can crawl your content immediately
+2. **Faster initial page load** - Users see content before JavaScript loads
+3. **Better performance on low-end devices** - Less client-side computation
+4. **Enhanced user experience** - No blank page while loading
+
+## Setting Up React Router 7
+
+Getting started is straightforward:
+
+```bash
+pnpm create react-router@latest
+```
+
+Configure SSR in your `react-router.config.ts`:
+
+```typescript
+import type { Config } from "@react-router/dev/config";
+
+export default {
+  ssr: true,
+  future: {
+    v8_viteEnvironmentApi: true,
+  },
+} satisfies Config;
+```
+
+## Data Loading Patterns
+
+React Router 7's data loading is elegant and type-safe:
+
+```typescript
+import type { Route } from './+types/blog';
+
+export async function loader() {
+  const posts = await getAllPosts();
+  return { posts };
+}
+
+export default function Blog({ loaderData }: Route.ComponentProps) {
+  const { posts } = loaderData;
+
+  return (
+    <div>
+      {posts.map(post => (
+        <article key={post.slug}>
+          <h2>{post.title}</h2>
+          <p>{post.excerpt}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+```
+
+## Deploying to Cloudflare Pages
+
+React Router 7 works beautifully with Cloudflare Pages:
+
+```bash
+pnpm run build
+pnpm run deploy
+```
+
+The built-in Cloudflare adapter handles all the configuration for you. Your app runs on Cloudflare's edge network, delivering content to users with minimal latency.
+
+## Performance Tips
+
+1. **Use streaming SSR** - React 18's streaming capabilities work out of the box
+2. **Optimize images** - Leverage Cloudflare's image optimization
+3. **Code splitting** - React Router automatically splits routes
+4. **Cache strategically** - Use Cloudflare's edge caching for static content
+
+## Conclusion
+
+React Router 7 makes building fast, modern React applications easier than ever. The combination of excellent DX, built-in SSR, and seamless Cloudflare deployment creates a powerful foundation for any web application.
+
+Give it a try on your next project!

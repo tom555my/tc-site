@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
+import { fadeInUp, staggerContainer, springs, tapScale } from '../lib/animations';
 
 const projects = [
 	{
@@ -29,68 +30,88 @@ const projects = [
 
 export function Projects() {
 	return (
-		<div className="space-y-8">
-			{projects.map((project, index) => (
+		<motion.div
+			className="space-y-8"
+			variants={staggerContainer}
+			initial="hidden"
+			whileInView="visible"
+			viewport={{ once: true, margin: '-50px' }}
+		>
+			{projects.map((project) => (
 				<motion.div
 					key={project.title}
-					initial={{ opacity: 0, y: 10 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.5, delay: index * 0.1 }}
+					variants={fadeInUp}
 					className="group"
 				>
-					<div className="flex items-center justify-between mb-2">
-						<div className="flex items-center gap-3">
-							<h3 className="text-white font-semibold group-hover:text-primary transition-colors">
-								{project.title}
-							</h3>
-							<span
-								className={`w-1.5 h-1.5 rounded-full ${project.status === 'Live' || project.status === 'Completed' ? 'bg-accent-green' : 'bg-accent-orange'}`}
-							/>
+					<motion.div
+						className="border border-white/5 rounded-lg p-6 bg-surface-1 hover:bg-surface-2 transition-colors"
+						whileHover={{
+							y: -4,
+							boxShadow: '0 8px 20px rgba(227, 100, 20, 0.1)',
+							borderColor: 'rgba(227, 100, 20, 0.2)',
+							transition: springs.snappy,
+						}}
+					>
+						<div className="flex items-center justify-between mb-2">
+							<div className="flex items-center gap-3">
+								<h3 className="text-white font-semibold group-hover:text-primary transition-colors">
+									{project.title}
+								</h3>
+								<span
+									className={`w-1.5 h-1.5 rounded-full ${project.status === 'Live' || project.status === 'Completed' ? 'bg-accent-green' : 'bg-accent-orange'}`}
+								/>
+							</div>
+							<div className="flex items-center gap-4">
+								{project.links?.demo && (
+									<motion.a
+										href={project.links.demo}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-muted/40 hover:text-primary transition-colors cursor-pointer"
+										aria-label={`View live demo of ${project.title}`}
+										whileHover={{ scale: 1.15, rotate: 5 }}
+										whileTap={tapScale}
+									>
+										<ExternalLink className="w-4 h-4" />
+									</motion.a>
+								)}
+								{project.links?.github && (
+									<motion.a
+										href={project.links.github}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-muted/40 hover:text-primary transition-colors cursor-pointer"
+										aria-label={`View source code of ${project.title} on GitHub`}
+										whileHover={{ scale: 1.15, rotate: 5 }}
+										whileTap={tapScale}
+									>
+										<Github className="w-4 h-4" />
+									</motion.a>
+								)}
+							</div>
 						</div>
-						<div className="flex items-center gap-4">
-							{project.links?.demo && (
-								<a
-									href={project.links.demo}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-muted/40 hover:text-primary transition-colors"
-									aria-label={`View live demo of ${project.title}`}
+						<p className="text-sm text-muted/70 mb-4 leading-relaxed">
+							{project.description}
+						</p>
+						<div className="flex flex-wrap gap-2">
+							{project.tags.map((tag) => (
+								<motion.span
+									key={tag}
+									className="text-[10px] uppercase tracking-tighter text-muted/40 border border-white/5 px-2 py-0.5 rounded cursor-default"
+									whileHover={{
+										scale: 1.05,
+										borderColor: 'rgba(227, 100, 20, 0.3)',
+										color: 'rgba(227, 100, 20, 0.8)',
+										transition: springs.snappy,
+									}}
 								>
-									<ExternalLink className="w-4 h-4" />
-								</a>
-							)}
-							{project.links?.github && (
-								<a
-									href={project.links.github}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-muted/40 hover:text-primary transition-colors"
-									aria-label={`View source code of ${project.title} on GitHub`}
-								>
-									<Github className="w-4 h-4" />
-								</a>
-							)}
+									{tag}
+								</motion.span>
+							))}
 						</div>
-					</div>
-					<p className="text-sm text-muted/70 mb-4 leading-relaxed">
-						{project.description}
-					</p>
-					<div className="flex flex-wrap gap-2 mb-6">
-						{project.tags.map((tag) => (
-							<span
-								key={tag}
-								className="text-[10px] uppercase tracking-tighter text-muted/40 border border-white/5 px-2 py-0.5 rounded"
-							>
-								{tag}
-							</span>
-						))}
-					</div>
-					{index !== projects.length - 1 && (
-						<div className="h-px bg-white/5 w-full" />
-					)}
+					</motion.div>
 				</motion.div>
 			))}
-		</div>
+		</motion.div>
 	);
 }

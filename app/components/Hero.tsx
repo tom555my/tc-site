@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Globe } from 'lucide-react';
+import { fadeInUp, slideInRight, springs, tapScale } from '../lib/animations';
 
 const socialLinks = [
 	{ icon: Globe, href: 'https://tommy-chung.com', label: 'website' },
@@ -16,9 +17,9 @@ export function Hero() {
 	return (
 		<div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-16">
 			<motion.div
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
+				variants={fadeInUp}
+				initial="hidden"
+				animate="visible"
 				className="flex-1"
 			>
 				<h1 className="text-3xl font-bold tracking-tight mb-2">Tommy Chung</h1>
@@ -31,24 +32,31 @@ export function Hero() {
 			</motion.div>
 
 			<motion.div
-				initial={{ opacity: 0, x: 10 }}
-				animate={{ opacity: 1, x: 0 }}
-				transition={{ duration: 0.5, delay: 0.2 }}
+				variants={slideInRight}
+				initial="hidden"
+				animate="visible"
 				className="flex flex-col gap-3"
 			>
 				{socialLinks.map((link) => (
-					<a
+					<motion.a
 						key={link.label}
 						href={link.href}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="group flex items-center gap-3 text-sm text-muted hover:text-white transition-colors"
+						className="group flex items-center gap-3 text-sm text-muted hover:text-white transition-colors cursor-pointer px-3 py-2 -mx-3 rounded-md hover:bg-white/[0.03]"
+						whileHover={{ x: 4, transition: springs.snappy }}
+						whileTap={tapScale}
 					>
-						<link.icon className="w-4 h-4" />
+						<motion.div
+							className="w-4 h-4"
+							whileHover={{ rotate: 360, transition: { duration: 0.5 } }}
+						>
+							<link.icon className="w-full h-full" />
+						</motion.div>
 						<span className="border-b border-transparent group-hover:border-white/20 pb-0.5">
 							{link.label}
 						</span>
-					</a>
+					</motion.a>
 				))}
 			</motion.div>
 		</div>

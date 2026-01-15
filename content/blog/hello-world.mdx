@@ -1,0 +1,71 @@
+---
+title: "Hello World: Building a Modern Portfolio"
+date: "2026-01-15"
+excerpt: "Exploring the journey of building a modern portfolio site with React Router 7, Tailwind CSS 4, and Framer Motion for delightful animations."
+tags: ["react", "tailwind", "framer-motion"]
+---
+
+# Hello World
+
+Welcome to my blog! I'm excited to share my journey in building this portfolio website using some of the latest web technologies.
+
+## The Tech Stack
+
+This site is built with:
+
+- **React Router 7** for routing and SSR
+- **Tailwind CSS 4** for styling with custom design tokens
+- **Framer Motion** for smooth, spring-based animations
+- **Cloudflare Pages** for blazing fast deployment
+
+## Why These Technologies?
+
+### React Router 7
+
+React Router 7 brings excellent SSR support right out of the box. The file-based routing makes it easy to organize pages, and the data loading patterns are intuitive:
+
+```typescript
+export async function loader() {
+  const data = await fetchData();
+  return { data };
+}
+```
+
+### Tailwind CSS 4
+
+Tailwind 4's new `@theme` directive makes it incredibly easy to define custom design tokens:
+
+```css
+@theme {
+  --color-primary: #e36414;
+  --color-surface-1: #0a0a0a;
+  --shadow-glow: 0 0 15px rgba(227, 100, 20, 0.2);
+}
+```
+
+### Framer Motion
+
+Spring-based animations feel so much more natural than linear transitions. Here's a simple hover effect:
+
+```typescript
+<motion.div
+  whileHover={{
+    y: -4,
+    scale: 1.02,
+    transition: { type: 'spring', stiffness: 400, damping: 30 }
+  }}
+>
+  Hover me!
+</motion.div>
+```
+
+## What's Next?
+
+I plan to write more about:
+
+- Building performant React applications
+- Exploring generative AI and LLMs
+- Tips for deploying to Cloudflare Pages
+- Advanced animation techniques
+
+Stay tuned!

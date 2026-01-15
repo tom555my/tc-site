@@ -26,6 +26,7 @@ import {
 	SiHasura,
 	SiSst,
 } from 'react-icons/si';
+import { fadeInScale, staggerContainer, springs, tapScale } from '../lib/animations';
 
 const skillCategories = [
 	{
@@ -79,32 +80,50 @@ const skillCategories = [
 
 export function Skills() {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-			{skillCategories.map((cat, index) => (
+		<motion.div
+			className="grid grid-cols-1 md:grid-cols-2 gap-8"
+			variants={staggerContainer}
+			initial="hidden"
+			whileInView="visible"
+			viewport={{ once: true, margin: '-50px' }}
+		>
+			{skillCategories.map((cat) => (
 				<motion.div
 					key={cat.title}
-					initial={{ opacity: 0, scale: 0.98 }}
-					whileInView={{ opacity: 1, scale: 1 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.4, delay: index * 0.1 }}
-					className="border border-white/5 rounded-lg p-5 hover:border-white/10 transition-colors"
+					variants={fadeInScale}
+					className="border border-white/5 rounded-lg p-5 bg-surface-1 hover:border-white/10 transition-colors"
+					whileHover={{
+						boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
+						y: -2,
+						transition: springs.snappy,
+					}}
 				>
 					<h3 className="text-xs font-semibold text-muted/40 uppercase tracking-widest mb-4">
 						{cat.title}
 					</h3>
 					<div className="flex flex-wrap gap-2">
 						{cat.skills.map((skill) => (
-							<span
+							<motion.span
 								key={skill.name}
-								className="flex items-center gap-2 text-[13px] text-muted/80 px-2.5 py-1.5 rounded bg-white/[0.03] border border-white/5 hover:border-primary/30 hover:text-primary transition-all"
+								className="flex items-center gap-2 text-[13px] text-muted/80 px-2.5 py-1.5 rounded bg-white/[0.03] border border-white/5 cursor-default"
+								whileHover={{
+									scale: 1.05,
+									borderColor: 'rgba(227, 100, 20, 0.3)',
+									color: 'rgba(227, 100, 20, 0.9)',
+									backgroundColor: 'rgba(227, 100, 20, 0.05)',
+									transition: springs.snappy,
+								}}
+								whileTap={tapScale}
 							>
-								<skill.icon className="w-3.5 h-3.5" />
+								<motion.div whileHover={{ rotate: 360, transition: { duration: 0.5 } }}>
+									<skill.icon className="w-3.5 h-3.5" />
+								</motion.div>
 								{skill.name}
-							</span>
+							</motion.span>
 						))}
 					</div>
 				</motion.div>
 			))}
-		</div>
+		</motion.div>
 	);
 }

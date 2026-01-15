@@ -1,0 +1,364 @@
+---
+title: "Building Production-Ready Generative AI Applications"
+date: "2026-01-13"
+excerpt: "Lessons learned from building conversational AI systems with OpenAI GPT-4, Claude, and LangChain in production environments."
+tags: ["ai", "llm", "openai", "claude", "langchain"]
+---
+
+# Building Production-Ready Generative AI Applications
+
+After building several generative AI applications in production, I've learned that there's a significant gap between a proof-of-concept and a robust, scalable AI system. Here's what I've learned.
+
+## The Architecture That Works
+
+For most production AI applications, I've found this architecture to be reliable:
+
+```typescript
+// app/lib/ai/chat-service.ts
+import Anthropic from '@anthropic-ai/sdk';
+import { createOpenAI } from '@ai-sdk/openai';
+
+interface ChatMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
+export class ChatService {
+  private anthropic: Anthropic;
+  private openai: ReturnType<typeof createOpenAI>;
+
+  constructor() {
+    this.anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+    this.openai = createOpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+
+  async chat(messages: ChatMessage[], provider: 'anthropic' | 'openai' = 'anthropic') {
+    if (provider === 'anthropic') {
+      return this.chatWithClaude(messages);
+    }
+    return this.chatWithGPT(messages);
+  }
+
+  private async chatWithClaude(messages: ChatMessage[]) {
+    const response = await this.anthropic.messages.create({
+      model: 'claude-3-5-sonnet-20241022',
+      max_tokens: 4096,
+      messages: messages.map(msg => ({
+        role: msg.role === 'system' ? 'assistant' : msg.role,
+        content: msg.content,
+      })),
+    });
+
+    return response.content[0].text;
+  }
+
+  private async chatWithGPT(messages: ChatMessage[]) {
+    const response = await this.openai('gpt-4o').chat({
+      messages,
+    });
+
+    return response.text;
+  }
+}
+```
+
+## Key Lessons Learned
+
+### 1. Always Implement Fallbacks
+
+LLM APIs can fail. Always have a fallback strategy:
+
+```typescript
+async function robustChat(messages: ChatMessage[]) {
+  try {
+    // Try primary provider
+    return await chatService.chat(messages, 'anthropic');
+  } catch (error) {
+    console.error('Anthropic failed, falling back to OpenAI:', error);
+
+    try {
+      // Fallback to secondary provider
+      return await chatService.chat(messages, 'openai');
+    } catch (fallbackError) {
+      console.error('All providers failed:', fallbackError);
+      // Return graceful error message
+      return "I'm having trouble connecting right now. Please try again.";
+    }
+  }
+}
+```
+
+### 2. Implement Proper Streaming
+
+Users expect real-time responses. Streaming is essential:
+
+```typescript
+import { streamText } from 'ai';
+
+export async function POST(request: Request) {
+  const { messages } = await request.json();
+
+  const result = streamText({
+    model: openai('gpt-4o'),
+    messages,
+    onFinish: async ({ text, usage }) => {
+      // Log usage for cost tracking
+      await logUsage({
+        tokens: usage.totalTokens,
+        cost: calculateCost(usage),
+        timestamp: new Date(),
+      });
+    },
+  });
+
+  return result.toDataStreamResponse();
+}
+```
+
+### 3. Cost Management is Critical
+
+Track every request:
+
+```typescript
+interface UsageLog {
+  timestamp: Date;
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  cost: number;
+  userId: string;
+}
+
+function calculateCost(usage: { inputTokens: number; outputTokens: number }, model: string) {
+  const pricing = {
+    'gpt-4o': { input: 0.005, output: 0.015 }, // per 1K tokens
+    'claude-3-5-sonnet': { input: 0.003, output: 0.015 },
+  };
+
+  const rates = pricing[model];
+  return (
+    (usage.inputTokens / 1000) * rates.input +
+    (usage.outputTokens / 1000) * rates.output
+  );
+}
+```
+
+### 4. Implement Rate Limiting
+
+Protect your API budget:
+
+```typescript
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(10, '1 m'), // 10 requests per minute
+  analytics: true,
+});
+
+export async function middleware(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') ?? 'anonymous';
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return new Response('Rate limit exceeded', { status: 429 });
+  }
+
+  return NextResponse.next();
+}
+```
+
+## Prompt Engineering Best Practices
+
+### System Prompts Matter
+
+```typescript
+const SYSTEM_PROMPT = `You are a helpful AI assistant for a customer support platform.
+
+Guidelines:
+- Be concise and professional
+- Always verify information before stating facts
+- If you don't know something, admit it
+- Never make up product details or pricing
+- Always prioritize user safety and privacy
+
+Available tools:
+- search_knowledge_base(query: string): Search internal documentation
+- create_ticket(title: string, description: string): Create support ticket
+- check_order_status(orderId: string): Look up order information`;
+```
+
+### Use Structured Outputs
+
+```typescript
+import { z } from 'zod';
+
+const ResponseSchema = z.object({
+  sentiment: z.enum(['positive', 'neutral', 'negative']),
+  category: z.enum(['technical', 'billing', 'general']),
+  urgency: z.enum(['low', 'medium', 'high']),
+  response: z.string(),
+});
+
+const response = await chatService.chat(messages, {
+  responseFormat: { type: 'json_object' },
+});
+
+const parsed = ResponseSchema.parse(JSON.parse(response));
+```
+
+## Error Handling Strategies
+
+```typescript
+class AIError extends Error {
+  constructor(
+    message: string,
+    public readonly code: 'RATE_LIMIT' | 'INVALID_REQUEST' | 'API_ERROR',
+    public readonly retryable: boolean
+  ) {
+    super(message);
+    this.name = 'AIError';
+  }
+}
+
+async function handleAIRequest(messages: ChatMessage[]) {
+  let attempts = 0;
+  const maxAttempts = 3;
+
+  while (attempts < maxAttempts) {
+    try {
+      return await chatService.chat(messages);
+    } catch (error) {
+      attempts++;
+
+      if (error.status === 429) {
+        // Rate limit - exponential backoff
+        await new Promise(resolve =>
+          setTimeout(resolve, Math.pow(2, attempts) * 1000)
+        );
+        continue;
+      }
+
+      if (error.status >= 500) {
+        // Server error - retry
+        if (attempts < maxAttempts) continue;
+      }
+
+      // Client error or max attempts reached
+      throw new AIError(
+        error.message,
+        error.status === 429 ? 'RATE_LIMIT' : 'API_ERROR',
+        error.status === 429 || error.status >= 500
+      );
+    }
+  }
+}
+```
+
+## Performance Optimization
+
+### Caching Responses
+
+```typescript
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
+
+async function getCachedOrGenerate(prompt: string) {
+  const cacheKey = `ai:response:${hashPrompt(prompt)}`;
+
+  // Check cache
+  const cached = await redis.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  // Generate new response
+  const response = await chatService.chat([
+    { role: 'user', content: prompt }
+  ]);
+
+  // Cache for 1 hour
+  await redis.set(cacheKey, response, { ex: 3600 });
+
+  return response;
+}
+```
+
+### Parallel Processing
+
+```typescript
+async function processMultipleQueries(queries: string[]) {
+  // Process up to 5 queries in parallel
+  const results = await Promise.all(
+    queries.map(query =>
+      chatService.chat([{ role: 'user', content: query }])
+    )
+  );
+
+  return results;
+}
+```
+
+## Monitoring and Observability
+
+Always track:
+
+- **Latency**: How long does each request take?
+- **Token usage**: Input vs output tokens
+- **Cost per request**: Real-time cost tracking
+- **Error rates**: By provider and error type
+- **User satisfaction**: Thumbs up/down feedback
+
+```typescript
+import { trace } from '@opentelemetry/api';
+
+const tracer = trace.getTracer('ai-service');
+
+async function trackedChat(messages: ChatMessage[]) {
+  return tracer.startActiveSpan('ai.chat', async (span) => {
+    const startTime = Date.now();
+
+    try {
+      const response = await chatService.chat(messages);
+
+      span.setAttributes({
+        'ai.model': 'claude-3-5-sonnet',
+        'ai.input_tokens': calculateTokens(messages),
+        'ai.latency_ms': Date.now() - startTime,
+      });
+
+      return response;
+    } catch (error) {
+      span.recordException(error);
+      throw error;
+    } finally {
+      span.end();
+    }
+  });
+}
+```
+
+## Conclusion
+
+Building production AI applications requires much more than just calling an API. Focus on:
+
+1. **Reliability**: Fallbacks, retries, error handling
+2. **Performance**: Streaming, caching, parallel processing
+3. **Cost management**: Rate limiting, usage tracking
+4. **User experience**: Fast responses, graceful errors
+5. **Observability**: Comprehensive monitoring
+
+The AI landscape is evolving rapidly, but these patterns have proven robust across multiple production deployments.
+
+## Resources
+
+- [Vercel AI SDK Documentation](https://sdk.vercel.ai/docs)
+- [Anthropic Claude API](https://docs.anthropic.com)
+- [OpenAI Platform](https://platform.openai.com/docs)
+- [LangChain Documentation](https://python.langchain.com)

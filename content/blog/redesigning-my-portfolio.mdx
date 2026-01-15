@@ -1,0 +1,334 @@
+---
+title: "Redesigning My Portfolio: From Static to Interactive"
+date: "2026-01-10"
+excerpt: "The story behind rebuilding my portfolio website with React Router 7, Tailwind CSS 4, and Framer Motion. Lessons learned and design decisions explained."
+tags: ["portfolio", "design", "react-router", "tailwind"]
+---
+
+# Redesigning My Portfolio: From Static to Interactive
+
+After years of using a basic static portfolio, I decided it was time for a complete redesign. Here's the journey from concept to launch.
+
+## The Problem with My Old Portfolio
+
+My previous portfolio had several issues:
+
+1. **Boring animations** - Basic CSS transitions felt flat
+2. **No personality** - Generic template that could be anyone's site
+3. **Hard to update** - Static HTML meant editing was painful
+4. **No blog** - Nowhere to share thoughts and experiences
+5. **Poor mobile experience** - Responsive design was an afterthought
+
+## Design Goals
+
+Before touching any code, I established clear goals:
+
+### 1. Minimalist but Not Boring
+
+I love minimalism, but I didn't want it to feel sterile. The solution? **Motion-driven minimalism** - clean layouts with delightful micro-interactions.
+
+### 2. Professional yet Personal
+
+As a Full-Stack AI Developer, I wanted to showcase technical expertise while maintaining a human touch. The balance came from:
+- Professional structure and content
+- Playful animations and interactions
+- Personal touches (handwritten font for signature touches)
+
+### 3. Performance First
+
+No matter how beautiful the site is, it needs to be fast:
+- Target: < 1s First Contentful Paint
+- Bundle size: < 200KB initial JavaScript
+- Lighthouse score: 95+ across all metrics
+
+### 4. Easy to Maintain
+
+Life's too short to spend hours updating your portfolio. Requirements:
+- Blog posts as MDX files (write once, render anywhere)
+- Type-safe code (TypeScript everywhere)
+- Simple deployment (push to main = live)
+
+## Technology Choices
+
+### React Router 7
+
+I chose React Router 7 over Next.js for several reasons:
+
+```typescript
+// Clean, type-safe data loading
+export async function loader() {
+  const posts = await getAllPosts();
+  return { posts };
+}
+
+export default function Blog({ loaderData }: Route.ComponentProps) {
+  const { posts } = loaderData; // Fully typed!
+  return <BlogList posts={posts} />;
+}
+```
+
+**Why I love it:**
+- File-based routing is intuitive
+- Built-in SSR without configuration
+- Excellent TypeScript support
+- Simpler than Next.js for my needs
+
+### Tailwind CSS 4
+
+The new `@theme` directive is a game-changer:
+
+```css
+@theme {
+  --color-primary: #e36414;
+  --color-surface-1: #0a0a0a;
+  --shadow-glow: 0 0 15px rgba(227, 100, 20, 0.2);
+}
+```
+
+No more CSS-in-JS complexity, just pure CSS custom properties with Tailwind's utility classes.
+
+### Framer Motion
+
+For animations, nothing beats Framer Motion's spring physics:
+
+```typescript
+<motion.div
+  whileHover={{
+    y: -4,
+    boxShadow: '0 8px 20px rgba(227, 100, 20, 0.1)',
+    transition: { type: 'spring', stiffness: 400, damping: 30 }
+  }}
+>
+  Hover me!
+</motion.div>
+```
+
+Every interaction feels natural and responsive.
+
+## Design Decisions
+
+### Color Palette
+
+I went with a dark theme for several reasons:
+
+1. **Reduces eye strain** - Important for technical content
+2. **Highlights content** - Orange accent pops against black
+3. **Modern aesthetic** - Dark mode is the standard now
+4. **Energy efficient** - Better for OLED displays
+
+The orange accent (#e36414) was chosen for its warmth and energy. It's professional but not corporate.
+
+### Typography
+
+I use two fonts strategically:
+
+- **Geist Mono** - For body text, creating a technical feel
+- **Inter** - For headings, providing contrast and hierarchy
+
+The monospace body font is unconventional but reinforces my identity as a developer.
+
+### Animation Philosophy
+
+Every animation serves a purpose:
+
+```typescript
+// Entrance animations - welcoming and smooth
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: springs.gentle },
+};
+
+// Hover effects - playful and responsive
+const hoverLift = {
+  hover: { y: -4, transition: springs.snappy },
+};
+
+// Micro-interactions - quick feedback
+const tapScale = {
+  scale: 0.98,
+  transition: springs.snappy,
+};
+```
+
+**Rules I followed:**
+1. Animate only 1-2 elements per view (avoid chaos)
+2. Use spring physics (feels natural)
+3. Respect `prefers-reduced-motion`
+4. Keep timing under 500ms
+
+### Component Architecture
+
+Each section is a self-contained component:
+
+```
+components/
+├── Hero.tsx          # Name, title, social links
+├── Experience.tsx    # Work history timeline
+├── Projects.tsx      # Project showcase cards
+└── Skills.tsx        # Tech stack grid
+```
+
+This makes it easy to:
+- Reorder sections
+- Update content independently
+- Test components in isolation
+
+## Building the Blog
+
+The blog was the most complex feature. I wanted:
+- Write in Markdown/MDX
+- Code syntax highlighting
+- Type-safe frontmatter
+- Fast build times
+
+The solution:
+
+```typescript
+// content/blog/my-post.mdx
+---
+title: "My Blog Post"
+date: "2024-01-15"
+excerpt: "A brief description"
+tags: ["react", "typescript"]
+---
+
+# My Blog Post
+
+Content with **formatting** and code:
+
+```typescript
+const hello = "world";
+```
+```
+
+The MDX pipeline:
+1. Write post with frontmatter
+2. Gray-matter parses metadata
+3. Rehype-pretty-code highlights syntax
+4. Framer Motion animates entrance
+
+## Performance Optimizations
+
+### Code Splitting
+
+React Router 7 automatically splits routes:
+
+```bash
+build/client/assets/home-CDghO-cS.js     166.94 kB
+build/client/assets/blog-B4XjJ2rD.js      21.61 kB
+```
+
+The blog bundle only loads when needed!
+
+### Lazy Loading
+
+Images and heavy components are lazy loaded:
+
+```typescript
+const BlogPost = lazy(() => import('./BlogPost'));
+
+<Suspense fallback={<Skeleton />}>
+  <BlogPost />
+</Suspense>
+```
+
+### Animation Performance
+
+I only animate GPU-accelerated properties:
+- ✅ `transform`, `opacity`, `scale`, `rotate`
+- ❌ `width`, `height`, `background-color`
+
+This keeps animations at 60fps even on low-end devices.
+
+### Caching Strategy
+
+```typescript
+// Cache blog posts for 1 hour
+export const headers = () => ({
+  'Cache-Control': 'public, max-age=3600',
+});
+```
+
+## Deployment
+
+Deploying to Cloudflare Pages is effortless:
+
+```bash
+pnpm run build
+pnpm run deploy
+```
+
+The entire site deploys to 300+ edge locations worldwide in under 2 minutes.
+
+## Metrics
+
+After launch, here are the results:
+
+**Lighthouse Scores:**
+- Performance: 98
+- Accessibility: 100
+- Best Practices: 100
+- SEO: 100
+
+**Web Vitals:**
+- LCP: 0.8s
+- FID: 8ms
+- CLS: 0.001
+
+**Bundle Sizes:**
+- Initial JS: 190KB (gzipped: 60KB)
+- Initial CSS: 32KB (gzipped: 6KB)
+- Total Page Weight: ~250KB
+
+## Lessons Learned
+
+### What Went Well
+
+1. **Starting with design tokens** - Having colors and spacing defined early made development faster
+2. **Component-first approach** - Building components before pages kept code organized
+3. **Animation library** - Creating reusable animation constants saved tons of time
+4. **TypeScript everywhere** - Caught bugs before they reached production
+
+### What I'd Do Differently
+
+1. **Plan the blog earlier** - Adding it later required some refactoring
+2. **More mobile testing** - I focused on desktop first, mobile second
+3. **Document as I build** - Writing this post made me realize I should have documented decisions in real-time
+
+### Surprising Discoveries
+
+1. **Tailwind 4 is incredible** - The new `@theme` system is so much better
+2. **React Router 7 feels lighter** - Simpler than Next.js for my use case
+3. **Spring animations > everything** - Users notice and appreciate the physics
+
+## What's Next?
+
+Future improvements I'm planning:
+
+- [ ] Add case studies for major projects
+- [ ] Implement dark/light mode toggle
+- [ ] Add search functionality to blog
+- [ ] Create an RSS feed
+- [ ] Add analytics (privacy-focused)
+- [ ] Internationalization (English + Chinese)
+
+## Conclusion
+
+Rebuilding my portfolio was one of the best investments I've made. It's not just a showcase - it's a sandbox for trying new technologies and a platform for sharing knowledge.
+
+The key takeaways:
+
+1. **Motion matters** - Good animations elevate the entire experience
+2. **Performance is a feature** - Fast sites feel professional
+3. **Modern tools rock** - React Router 7 + Tailwind 4 + Framer Motion is a joy
+4. **Iterate constantly** - Your portfolio is never "done"
+
+If you're thinking about redesigning your portfolio, do it! Start small, iterate quickly, and have fun with it.
+
+## View the Code
+
+The entire portfolio is open source. Check out the code on [GitHub](https://github.com) to see how everything works under the hood.
+
+---
+
+*Built with React Router 7, Tailwind CSS 4, and Framer Motion. Deployed on Cloudflare Pages.*

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { fadeInUp, staggerContainer, springs } from '../lib/animations';
 
 const experiences = [
 	{
@@ -60,16 +61,25 @@ const experiences = [
 
 export function Experience() {
 	return (
-		<div className="space-y-12">
-			{experiences.map((exp, index) => (
+		<motion.div
+			className="space-y-12"
+			variants={staggerContainer}
+			initial="hidden"
+			whileInView="visible"
+			viewport={{ once: true, margin: '-50px' }}
+		>
+			{experiences.map((exp) => (
 				<motion.div
 					key={exp.company + exp.period}
-					initial={{ opacity: 0, y: 10 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.5, delay: index * 0.1 }}
-					className="group relative"
+					variants={fadeInUp}
+					className="group relative pl-6 border-l-2 border-white/5 hover:border-primary/30 transition-colors"
 				>
+					<motion.div
+						className="absolute left-[-2px] top-0 w-0.5 h-full bg-gradient-to-b from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+						initial={{ scaleY: 0 }}
+						whileHover={{ scaleY: 1, transition: springs.snappy }}
+					/>
+
 					<div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-2">
 						<h3 className="text-white font-semibold group-hover:text-primary transition-colors">
 							{exp.company}
@@ -87,17 +97,24 @@ export function Experience() {
 					</div>
 					<ul className="space-y-2">
 						{exp.description.map((item, i) => (
-							<li
+							<motion.li
 								key={i}
-								className="text-sm text-muted/80 leading-relaxed flex items-start gap-2"
+								className="text-sm text-muted/80 leading-relaxed flex items-start gap-2 cursor-default"
+								whileHover={{ x: 4, transition: springs.gentle }}
 							>
-								<span className="mt-1.5 w-1 h-1 rounded-full bg-primary/30 shrink-0" />
+								<motion.span
+									className="mt-1.5 w-1 h-1 rounded-full bg-primary/30 shrink-0"
+									whileHover={{
+										scale: 1.5,
+										backgroundColor: 'rgba(227, 100, 20, 0.8)',
+									}}
+								/>
 								{item}
-							</li>
+							</motion.li>
 						))}
 					</ul>
 				</motion.div>
 			))}
-		</div>
+		</motion.div>
 	);
 }
