@@ -2,6 +2,7 @@ import { Hero } from '../components/Hero';
 import { Experience } from '../components/Experience';
 import { Projects } from '../components/Projects';
 import { Skills } from '../components/Skills';
+import { Link } from 'react-router';
 
 export function meta() {
 	return [
@@ -65,17 +66,23 @@ export default function Home() {
 	return (
 		<div className="space-y-24">
 			<nav className="flex gap-6 mb-8 pb-4 border-b border-white/5">
-				<a
-					href="/"
+				<Link
+					to="/"
 					className="text-sm font-medium text-white transition-colors"
 				>
 					Home
-				</a>
-				<a
-					href="/blog"
+				</Link>
+				<Link
+					to="/blog"
 					className="text-sm text-muted hover:text-white transition-colors"
 				>
 					Blog
+				</Link>
+        <a
+					href="/llms.txt"
+					className="text-sm text-muted hover:text-white transition-colors ml-auto"
+				>
+					llms.txt
 				</a>
 			</nav>
 			<Hero />

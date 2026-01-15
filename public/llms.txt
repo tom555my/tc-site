@@ -1,0 +1,164 @@
+# Tommy Chung - Full-Stack AI Developer & Data Scientist
+
+> Personal portfolio and technical blog focused on full-stack development, generative AI, and modern web technologies.
+
+## Site Information
+
+- Site Name: Tommy Chung
+- URL: https://tommy-chung.com
+- Type: Personal Portfolio & Technical Blog
+- Owner: Tommy Chung
+- Location: Toronto, Canada
+- Current Role: Senior Data Science Engineer at Robots and Pencils
+
+## Description
+
+Portfolio website and blog for Tommy Chung, a full-stack AI developer and data scientist based in Toronto. The site showcases professional experience, projects, technical skills, and blog posts about web development, AI, and software engineering.
+
+## Contact
+
+- Website: https://tommy-chung.com
+- Email: tc@tommy-chung.com
+- GitHub: https://github.com/tom555my
+- LinkedIn: https://linkedin.com/in/tommy-chung-kwok-cheong
+
+## Site Structure
+
+### Main Pages
+
+- Home: https://tommy-chung.com/
+  - Personal introduction and bio
+  - Professional experience timeline
+  - Project showcase
+  - Technical skills overview
+
+- Blog: https://tommy-chung.com/blog
+  - Technical articles on web development, AI, and software engineering
+  - Topics: React, TypeScript, React Router, Generative AI, Framer Motion, Cloudflare
+
+### Blog Posts
+
+1. "Hello World: Building a Modern Portfolio" (2026-01-15)
+   - URL: https://tommy-chung.com/blog/hello-world
+   - Topics: React, Tailwind CSS, Framer Motion
+   - About: Building a modern portfolio with React Router 7, Tailwind CSS 4, and animations
+
+2. "Building with React Router 7: SSR Made Simple" (2026-01-14)
+   - URL: https://tommy-chung.com/blog/building-with-react-router-7
+   - Topics: React, React Router, SSR, Performance
+   - About: Deep dive into React Router 7's server-side rendering capabilities
+
+3. "Building Full-Stack Apps on Cloudflare" (Published)
+   - URL: https://tommy-chung.com/blog/cloudflare-full-stack
+   - Topics: Cloudflare, Full-Stack, Edge Computing
+   - About: Leveraging Cloudflare's edge platform for full-stack applications
+
+4. "Building with Generative AI" (Published)
+   - URL: https://tommy-chung.com/blog/building-with-generative-ai
+   - Topics: AI, Generative AI, LLMs
+   - About: Building applications with generative AI technologies
+
+5. "Mastering Framer Motion" (Published)
+   - URL: https://tommy-chung.com/blog/mastering-framer-motion
+   - Topics: Framer Motion, Animations, React
+   - About: Creating delightful animations with Framer Motion
+
+6. "Redesigning My Portfolio" (Published)
+   - URL: https://tommy-chung.com/blog/redesigning-my-portfolio
+   - Topics: Design, Portfolio, Web Development
+   - About: Process and decisions behind redesigning this portfolio
+
+## Professional Experience
+
+### Current Position
+- Company: Robots and Pencils ULC
+- Role: Senior Data Science Engineer
+- Period: June 2024 – Present
+- Location: Canada
+- Focus: Generative AI, Agentic AI, Educational Technology, Conversational Simulation
+
+### Previous Roles
+- Lead Developer at Caribou Technology Limited (Aug 2023 – June 2024)
+  - Next.js, AWS, SST.dev, Chatbot systems with GPT4/Claude3
+- Senior Programmer at Mad Head App Limited (June 2022 – June 2023)
+  - React, Koa.js, MongoDB, GCP, serving 400k+ users
+- Senior Programmer at PrimeCredit (Hong Kong)
+
+## Technical Skills
+
+### Languages & Frameworks
+- JavaScript, TypeScript, Node.js
+- React.js, Next.js, React Router, React Native
+- Express.js, Koa.js
+- Python, Pandas
+
+### Databases
+- MySQL, PostgreSQL, MongoDB, MariaDB
+
+### Cloud & DevOps
+- Cloudflare Pages
+- AWS (EventBus, Lambda)
+- Google Cloud Platform (GCP)
+- Docker, Kubernetes
+- Vercel
+
+### Tools & Technologies
+- Git, n8n, Hasura, SST.dev, Expo
+
+### Specializations
+- Generative AI & LLMs (OpenAI GPT-4, Claude)
+- Server-Side Rendering (SSR)
+- Full-Stack Development
+- Data Science & Engineering
+- Conversational AI & Chatbots
+
+## Technical Stack (This Site)
+
+- Framework: React Router 7 with SSR
+- Styling: Tailwind CSS 4
+- Animations: Framer Motion
+- Deployment: Cloudflare Pages
+- Language: TypeScript
+- Build Tool: Vite
+- Blog: MDX (Markdown + JSX)
+- Dynamic OG Images: workers-og
+
+## Content Topics
+
+This site covers:
+- Full-stack web development
+- Generative AI and LLM applications
+- React ecosystem (React Router, Next.js)
+- TypeScript best practices
+- Cloudflare Workers and edge computing
+- Modern CSS (Tailwind CSS)
+- Animation and UI/UX (Framer Motion)
+- Performance optimization
+- Server-side rendering (SSR)
+- Cloud infrastructure (AWS, GCP, Cloudflare)
+
+## Keywords
+
+full-stack developer, AI developer, data science engineer, React, TypeScript, Cloudflare, AWS, web development, Toronto, generative AI, LLMs, OpenAI, GPT-4, Claude, React Router, Next.js, Node.js, Python, serverless, edge computing, SSR, Tailwind CSS, Framer Motion
+
+## Social Media
+
+- GitHub: https://github.com/tom555my
+- LinkedIn: https://linkedin.com/in/tommy-chung-kwok-cheong
+
+## Open Graph Images
+
+- Home OG Image: https://tommy-chung.com/og-image-home
+- Blog Index OG Image: https://tommy-chung.com/og-image-blog
+- Blog Post OG Images: https://tommy-chung.com/og-image/{slug}
+
+## Additional Resources
+
+- Favicon: https://tommy-chung.com/favicon.svg
+- Apple Touch Icon: https://tommy-chung.com/apple-touch-icon.svg
+
+---
+
+Last Updated: 2026-01-15
+Site Version: 1.0
+LLMs.txt Version: 1.0
