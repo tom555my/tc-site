@@ -66,6 +66,7 @@ All major components are in `app/components/`:
 - **Skills.tsx**: Technical skills organized by category
 
 **Animation Pattern**: Components use Framer Motion with:
+
 - `initial={{ opacity: 0, y: 10 }}` or `x: 10`
 - `animate` or `whileInView` with `viewport={{ once: true }}`
 - Staggered delays for list items (`delay: index * 0.1`)
@@ -73,6 +74,7 @@ All major components are in `app/components/`:
 ### Page Structure
 
 The home page (`app/routes/home.tsx`) follows this section order:
+
 1. Hero (no header)
 2. Experience (with "EXPERIENCE" header)
 3. Projects (with "PROJECTS" header)
@@ -104,6 +106,7 @@ links: {
 ### Status Indicators
 
 Projects use color-coded status dots:
+
 - Green (`bg-accent-green`): "Live" or "Completed"
 - Orange (`bg-accent-orange`): In progress or other states
 
@@ -117,12 +120,14 @@ Projects use color-coded status dots:
 ## Type Generation
 
 The project uses automatic type generation:
+
 - `postinstall` hook runs `cf-typegen` to generate Cloudflare Worker types
 - `typecheck` runs both Cloudflare and React Router type generation before checking
 
 ## Vite Configuration
 
 Build pipeline uses these Vite plugins (in order):
+
 1. `@cloudflare/vite-plugin` - Cloudflare Pages integration with SSR environment
 2. `@tailwindcss/vite` - Tailwind CSS 4
 3. `@react-router/dev/vite` - React Router 7

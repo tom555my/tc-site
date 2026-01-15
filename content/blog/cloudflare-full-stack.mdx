@@ -133,6 +133,7 @@ async function handleUsers(request: Request, env: Env) {
 ## Working with D1 Database
 
 D1 is SQLite at the edge. It's perfect for:
+
 - User data
 - Session storage
 - Application state
@@ -220,6 +221,7 @@ await env.DB.prepare(`SELECT * FROM users WHERE id IN (${placeholders})`)
 ## KV Store Patterns
 
 KV is perfect for:
+
 - Caching API responses
 - Session storage
 - Rate limiting
@@ -433,6 +435,7 @@ export default {
 ## Conclusion
 
 Cloudflare's platform is production-ready for:
+
 - ✅ APIs and microservices
 - ✅ Full-stack applications
 - ✅ Real-time features (Durable Objects)

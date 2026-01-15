@@ -31,12 +31,14 @@ agent-browser wait --text "Success"
 Use this priority order:
 
 1. **Refs from snapshot** (most reliable for known elements)
+
    ```bash
    agent-browser snapshot -i
    agent-browser click @e2
    ```
 
 2. **Semantic locators** (resilient, readable)
+
    ```bash
    agent-browser find role button click --name "Submit"
    ```
@@ -49,6 +51,7 @@ Use this priority order:
 ## Session Management
 
 Use named sessions for:
+
 - **Multiple simultaneous automations**
 - **Different user contexts** (authenticated vs guest)
 - **Parallel testing scenarios**
@@ -136,12 +139,14 @@ agent-browser snapshot -i -c -d 3
 ## Authentication Patterns
 
 ### Token-Based (API/SPA)
+
 ```bash
 agent-browser open https://api.example.com \
   --headers '{"Authorization": "Bearer eyJhbG..."}'
 ```
 
 ### Session State
+
 ```bash
 # Login once, save state
 agent-browser open https://app.example.com/login
@@ -156,6 +161,7 @@ agent-browser open https://app.example.com/dashboard
 ```
 
 ### HTTP Basic Auth
+
 ```bash
 agent-browser set credentials username password
 agent-browser open https://protected.example.com
@@ -164,6 +170,7 @@ agent-browser open https://protected.example.com
 ## Network Control
 
 ### Mock API Responses
+
 ```bash
 # Intercept and mock
 agent-browser network route "**/api/users" --body '{"users":[]}'
@@ -174,6 +181,7 @@ agent-browser network route "**/tracking/**" --abort
 ```
 
 ### Monitor Requests
+
 ```bash
 # View all requests
 agent-browser network requests
@@ -228,6 +236,7 @@ agent-browser wait --url "**/success"
 ## Debugging Strategies
 
 ### Visual Debugging
+
 ```bash
 # Show browser window
 agent-browser --headed open https://example.com
@@ -242,6 +251,7 @@ agent-browser screenshot step2.png
 ```
 
 ### Console & Errors
+
 ```bash
 # Check console for errors
 agent-browser console
@@ -254,6 +264,7 @@ agent-browser network requests --filter 404
 ```
 
 ### Trace Recording
+
 ```bash
 # Start trace
 agent-browser trace start
@@ -271,6 +282,7 @@ Open trace in Playwright Trace Viewer: `npx playwright show-trace debug-trace.zi
 ## Performance Optimization
 
 ### Reduce Network Load
+
 ```bash
 # Block unnecessary resources
 agent-browser network route "**/*.png" --abort
@@ -279,12 +291,14 @@ agent-browser network route "**/analytics/**" --abort
 ```
 
 ### Efficient Snapshots
+
 ```bash
 # Only get what you need
 agent-browser snapshot -i -c -s "#app"
 ```
 
 ### Reuse Sessions
+
 ```bash
 # Keep browser alive between commands
 # Don't close until done
@@ -298,36 +312,42 @@ agent-browser close  # Only at the end
 ## Common Pitfalls
 
 ### Don't: Use CSS selectors for everything
+
 ```bash
 # Fragile
 agent-browser click "div.card:nth-child(3) > button.btn-primary"
 ```
 
 ### Do: Use semantic locators
+
 ```bash
 # Resilient
 agent-browser find role button click --name "Add to Cart"
 ```
 
 ### Don't: Use fixed waits everywhere
+
 ```bash
 agent-browser wait 5000
 agent-browser click @e2
 ```
 
 ### Do: Wait for specific conditions
+
 ```bash
 agent-browser wait @e2
 agent-browser click @e2
 ```
 
 ### Don't: Skip snapshot when refs are needed
+
 ```bash
 # Missing context about available elements
 agent-browser click @e2  # Which element is e2?
 ```
 
 ### Do: Get snapshot first
+
 ```bash
 agent-browser snapshot -i
 # Now you know: button "Submit" [ref=e2]
@@ -337,12 +357,14 @@ agent-browser click @e2
 ## Output Formats
 
 ### Human-Readable (Default)
+
 ```bash
 agent-browser snapshot
 # Output: Formatted accessibility tree
 ```
 
 ### Machine-Readable (--json)
+
 ```bash
 agent-browser snapshot --json
 # Output: {"type":"snapshot","nodes":[...]}
@@ -353,6 +375,7 @@ Use `--json` when parsing output programmatically.
 ## Testing Workflows
 
 ### Smoke Testing
+
 ```bash
 agent-browser open https://app.example.com
 agent-browser wait --text "Welcome"
@@ -363,6 +386,7 @@ agent-browser screenshot features.png
 ```
 
 ### Form Validation Testing
+
 ```bash
 # Test empty submission
 agent-browser find role button click --name "Submit"
@@ -375,6 +399,7 @@ agent-browser wait --text "Success"
 ```
 
 ### Responsive Testing
+
 ```bash
 # Mobile
 agent-browser set device "iPhone 14"
@@ -395,6 +420,7 @@ agent-browser screenshot desktop.png
 ## Integration Patterns
 
 ### CI/CD Pipeline
+
 ```bash
 #!/bin/bash
 set -e
@@ -414,6 +440,7 @@ agent-browser close
 ```
 
 ### Data Extraction
+
 ```bash
 # Navigate to page
 agent-browser open https://example.com/data
@@ -428,6 +455,7 @@ agent-browser get html @e3 > data3.html
 ```
 
 ### Multi-Step Workflows
+
 ```bash
 # Login
 agent-browser open https://app.example.com/login

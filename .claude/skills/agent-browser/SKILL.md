@@ -42,12 +42,14 @@ agent-browser wait --text "Success"
 ## Quick Reference
 
 ### Navigation
+
 ```bash
 agent-browser open <url>           # Navigate
 agent-browser back|forward|reload  # History
 ```
 
 ### Snapshots
+
 ```bash
 agent-browser snapshot             # Full accessibility tree with refs
 agent-browser snapshot -i          # Interactive elements only (recommended)
@@ -60,6 +62,7 @@ agent-browser snapshot -d 3        # Limit depth
 ### Element Interaction
 
 **Preferred: Semantic locators (resilient)**
+
 ```bash
 agent-browser find role button click --name "Submit"
 agent-browser find label "Email" fill "user@example.com"
@@ -67,18 +70,21 @@ agent-browser find text "Sign In" click
 ```
 
 **Alternative: Refs from snapshot**
+
 ```bash
 agent-browser click @e2
 agent-browser fill @e3 "text"
 ```
 
 **Fallback: CSS selectors**
+
 ```bash
 agent-browser click "#element-id"
 agent-browser fill ".input-class" "text"
 ```
 
 ### Form Input
+
 ```bash
 agent-browser fill <sel> <text>     # Clear and fill
 agent-browser type <sel> <text>     # Type without clearing
@@ -89,6 +95,7 @@ agent-browser upload <sel> <file>   # File upload
 ```
 
 ### Data Extraction
+
 ```bash
 agent-browser get text <sel>        # Extract text
 agent-browser get value <sel>       # Input value
@@ -97,6 +104,7 @@ agent-browser get title|url         # Page info
 ```
 
 ### Wait & Sync
+
 ```bash
 agent-browser wait <selector>       # Wait for element
 agent-browser wait --text "Ready"   # Wait for text
@@ -105,12 +113,14 @@ agent-browser wait --load networkidle
 ```
 
 ### Screenshots
+
 ```bash
 agent-browser screenshot [path]     # Viewport
 agent-browser screenshot --full     # Full page
 ```
 
 ### Sessions
+
 ```bash
 agent-browser --session <name> open <url>
 agent-browser --session <name> snapshot -i
@@ -122,6 +132,7 @@ Sessions are isolated: separate cookies, auth, and storage.
 ## When to Use Each Approach
 
 ### Use Semantic Locators (Primary)
+
 - Forms with labels
 - Buttons with clear names
 - Interactive UI elements
@@ -130,6 +141,7 @@ Sessions are isolated: separate cookies, auth, and storage.
 **Benefits**: Resilient, readable, maintainable
 
 ### Use Refs (Secondary)
+
 - Multiple interactions on same page
 - Known element structure from snapshot
 - Performance optimization
@@ -137,6 +149,7 @@ Sessions are isolated: separate cookies, auth, and storage.
 **Benefits**: Exact targeting, fast
 
 ### Use CSS Selectors (Fallback)
+
 - Legacy pages without accessibility features
 - Specific DOM traversal needed
 - No semantic attributes available
@@ -144,16 +157,19 @@ Sessions are isolated: separate cookies, auth, and storage.
 ## Reference Documentation
 
 **For complete command listing**: See [references/commands.md](references/commands.md)
+
 - All commands with parameters and examples
 - Flags and options
 - Environment variables
 
 **For semantic locator patterns**: See [references/semantic-locators.md](references/semantic-locators.md)
+
 - All locator types (role, label, text, placeholder, etc.)
 - Combination patterns
 - Common use cases
 
 **For AI-specific guidance**: See [references/best-practices.md](references/best-practices.md)
+
 - Element selection strategies
 - Session management
 - Error handling patterns
@@ -163,6 +179,7 @@ Sessions are isolated: separate cookies, auth, and storage.
 ## Common Patterns
 
 ### Login Workflow
+
 ```bash
 agent-browser open https://app.example.com/login
 agent-browser find label "Email" fill "user@example.com"
@@ -172,6 +189,7 @@ agent-browser wait --url "**/dashboard"
 ```
 
 ### Form Filling
+
 ```bash
 agent-browser snapshot -i
 agent-browser find label "First Name" fill "John"
@@ -182,6 +200,7 @@ agent-browser wait --text "Success"
 ```
 
 ### Data Extraction
+
 ```bash
 agent-browser open https://example.com/data
 agent-browser snapshot -i
@@ -190,6 +209,7 @@ agent-browser get html @e2
 ```
 
 ### Testing Workflow
+
 ```bash
 agent-browser open https://app.example.com
 agent-browser wait --text "Welcome"
@@ -199,6 +219,7 @@ agent-browser wait --text "Features"
 ```
 
 ### Multi-Tab Work
+
 ```bash
 agent-browser open https://site1.com
 agent-browser tab new https://site2.com
@@ -210,12 +231,14 @@ agent-browser tab 1  # Switch to second tab
 ## Authentication
 
 ### Token-based (API/SPA)
+
 ```bash
 agent-browser open https://api.example.com \
   --headers '{"Authorization": "Bearer token"}'
 ```
 
 ### Session State
+
 ```bash
 # Login and save state
 agent-browser state save auth.json
@@ -226,6 +249,7 @@ agent-browser open https://app.example.com
 ```
 
 ### HTTP Basic
+
 ```bash
 agent-browser set credentials username password
 agent-browser open https://protected.example.com

@@ -11,6 +11,7 @@ agent-browser find <locator-type> <value> <action> [options]
 ## Available Locator Types
 
 ### role
+
 Find by ARIA role (button, link, textbox, checkbox, etc.)
 
 ```bash
@@ -22,6 +23,7 @@ agent-browser find role checkbox check --name "Remember me"
 ```
 
 ### label
+
 Find input by associated label text
 
 ```bash
@@ -31,6 +33,7 @@ agent-browser find label "Country" select "United States"
 ```
 
 ### text
+
 Find by visible text content
 
 ```bash
@@ -40,6 +43,7 @@ agent-browser find text "Learn More" --exact click
 ```
 
 ### placeholder
+
 Find input by placeholder attribute
 
 ```bash
@@ -48,6 +52,7 @@ agent-browser find placeholder "Enter email" fill "test@example.com"
 ```
 
 ### alt
+
 Find image by alt text
 
 ```bash
@@ -56,6 +61,7 @@ agent-browser find alt "Profile Picture" hover
 ```
 
 ### title
+
 Find by title attribute
 
 ```bash
@@ -64,6 +70,7 @@ agent-browser find title "Settings" hover
 ```
 
 ### testid
+
 Find by data-testid attribute
 
 ```bash
@@ -73,6 +80,7 @@ agent-browser find testid "modal-close" click
 ```
 
 ### first / last / nth
+
 Find first, last, or nth matching element
 
 ```bash
@@ -106,6 +114,7 @@ agent-browser find label "Status" get value
 ## Options & Filters
 
 ### --name
+
 Filter by accessible name (combines text, aria-label, title, etc.)
 
 ```bash
@@ -114,6 +123,7 @@ agent-browser find role link click --name "Documentation"
 ```
 
 ### --exact
+
 Require exact text match (no partial matches)
 
 ```bash
@@ -124,6 +134,7 @@ agent-browser find label "Email" fill "test@example.com" --exact
 ## Common Patterns
 
 ### Form Filling
+
 ```bash
 agent-browser find label "First Name" fill "John"
 agent-browser find label "Last Name" fill "Doe"
@@ -132,6 +143,7 @@ agent-browser find role button click --name "Submit"
 ```
 
 ### Navigation
+
 ```bash
 agent-browser find role link click --name "About"
 agent-browser find role button click --name "Contact Us"
@@ -139,6 +151,7 @@ agent-browser wait --text "Contact Form"
 ```
 
 ### Search
+
 ```bash
 agent-browser find placeholder "Search..." type "product name"
 agent-browser find role button click --name "Search"
@@ -146,6 +159,7 @@ agent-browser wait --text "Results"
 ```
 
 ### Modals & Dialogs
+
 ```bash
 agent-browser find role button click --name "Open Dialog"
 agent-browser wait role dialog
@@ -153,6 +167,7 @@ agent-browser find role button click --name "Confirm"
 ```
 
 ### Lists & Tables
+
 ```bash
 agent-browser find role row click --name "First Row"
 agent-browser find role cell get text --name "Price"
@@ -169,6 +184,7 @@ agent-browser find first role listitem click
 ## When to Use CSS Selectors Instead
 
 Use traditional CSS selectors when:
+
 - Element has no semantic attributes
 - You need very specific DOM traversal
 - Working with legacy code without accessibility features

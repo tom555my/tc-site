@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import { getAllPosts, type BlogPost } from '../lib/blog.server';
 import { fadeInUp, staggerContainer, springs } from '../lib/animations';
+import { Link } from 'react-router';
 
 export async function loader() {
 	const posts = await getAllPosts();
@@ -30,18 +31,18 @@ export default function Blog({ loaderData }: BlogProps) {
 	return (
 		<div className="space-y-12">
 			<nav className="flex gap-6 mb-8 pb-4 border-b border-white/5">
-				<a
-					href="/"
+				<Link
+					to="/"
 					className="text-sm text-muted hover:text-white transition-colors"
 				>
 					Home
-				</a>
-				<a
-					href="/blog"
+				</Link>
+				<Link
+					to="/blog"
 					className="text-sm font-medium text-white transition-colors"
 				>
 					Blog
-				</a>
+				</Link>
 			</nav>
 
 			<motion.div

@@ -30,6 +30,7 @@ I love minimalism, but I didn't want it to feel sterile. The solution? **Motion-
 ### 2. Professional yet Personal
 
 As a Full-Stack AI Developer, I wanted to showcase technical expertise while maintaining a human touch. The balance came from:
+
 - Professional structure and content
 - Playful animations and interactions
 - Personal touches (handwritten font for signature touches)
@@ -37,6 +38,7 @@ As a Full-Stack AI Developer, I wanted to showcase technical expertise while mai
 ### 3. Performance First
 
 No matter how beautiful the site is, it needs to be fast:
+
 - Target: < 1s First Contentful Paint
 - Bundle size: < 200KB initial JavaScript
 - Lighthouse score: 95+ across all metrics
@@ -44,6 +46,7 @@ No matter how beautiful the site is, it needs to be fast:
 ### 4. Easy to Maintain
 
 Life's too short to spend hours updating your portfolio. Requirements:
+
 - Blog posts as MDX files (write once, render anywhere)
 - Type-safe code (TypeScript everywhere)
 - Simple deployment (push to main = live)
@@ -68,6 +71,7 @@ export default function Blog({ loaderData }: Route.ComponentProps) {
 ```
 
 **Why I love it:**
+
 - File-based routing is intuitive
 - Built-in SSR without configuration
 - Excellent TypeScript support
@@ -151,6 +155,7 @@ const tapScale = {
 ```
 
 **Rules I followed:**
+
 1. Animate only 1-2 elements per view (avoid chaos)
 2. Use spring physics (feels natural)
 3. Respect `prefers-reduced-motion`
@@ -169,6 +174,7 @@ components/
 ```
 
 This makes it easy to:
+
 - Reorder sections
 - Update content independently
 - Test components in isolation
@@ -176,6 +182,7 @@ This makes it easy to:
 ## Building the Blog
 
 The blog was the most complex feature. I wanted:
+
 - Write in Markdown/MDX
 - Code syntax highlighting
 - Type-safe frontmatter
@@ -183,7 +190,7 @@ The blog was the most complex feature. I wanted:
 
 The solution:
 
-```typescript
+````typescript
 // content/blog/my-post.mdx
 ---
 title: "My Blog Post"
@@ -198,8 +205,9 @@ Content with **formatting** and code:
 
 ```typescript
 const hello = "world";
-```
-```
+````
+
+````
 
 The MDX pipeline:
 1. Write post with frontmatter
@@ -216,7 +224,7 @@ React Router 7 automatically splits routes:
 ```bash
 build/client/assets/home-CDghO-cS.js     166.94 kB
 build/client/assets/blog-B4XjJ2rD.js      21.61 kB
-```
+````
 
 The blog bundle only loads when needed!
 
@@ -235,6 +243,7 @@ const BlogPost = lazy(() => import('./BlogPost'));
 ### Animation Performance
 
 I only animate GPU-accelerated properties:
+
 - ✅ `transform`, `opacity`, `scale`, `rotate`
 - ❌ `width`, `height`, `background-color`
 
@@ -265,17 +274,20 @@ The entire site deploys to 300+ edge locations worldwide in under 2 minutes.
 After launch, here are the results:
 
 **Lighthouse Scores:**
+
 - Performance: 98
 - Accessibility: 100
 - Best Practices: 100
 - SEO: 100
 
 **Web Vitals:**
+
 - LCP: 0.8s
 - FID: 8ms
 - CLS: 0.001
 
 **Bundle Sizes:**
+
 - Initial JS: 190KB (gzipped: 60KB)
 - Initial CSS: 32KB (gzipped: 6KB)
 - Total Page Weight: ~250KB
@@ -331,4 +343,4 @@ The entire portfolio is open source. Check out the code on [GitHub](https://gith
 
 ---
 
-*Built with React Router 7, Tailwind CSS 4, and Framer Motion. Deployed on Cloudflare Pages.*
+_Built with React Router 7, Tailwind CSS 4, and Framer Motion. Deployed on Cloudflare Pages._
