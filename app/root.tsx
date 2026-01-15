@@ -22,6 +22,7 @@ export const links: Route.LinksFunction = () => [
 		href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Geist+Mono:wght@400;600&family=Gloria+Hallelujah&display=swap',
 	},
 	{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+	{ rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
