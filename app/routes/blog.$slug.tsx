@@ -3,7 +3,9 @@ import { format } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
 import { getPostBySlug, type BlogPost as BlogPostType } from '../lib/blog.server';
 import { fadeInUp, springs } from '../lib/animations';
-import { Suspense, lazy } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 interface LoaderArgs {
 	params: {
@@ -40,9 +42,6 @@ interface BlogPostProps {
 
 export default function BlogPost({ loaderData }: BlogPostProps) {
 	const { post } = loaderData;
-
-	// Dynamically import the MDX content
-	const Content = lazy(() => import(`../../content/blog/${post.slug}.mdx`));
 
 	return (
 		<div className="space-y-8">
@@ -83,9 +82,12 @@ export default function BlogPost({ loaderData }: BlogPostProps) {
 					</div>
 				</header>
 
-				<Suspense fallback={<div className="text-muted">Loading...</div>}>
-					<Content />
-				</Suspense>
+				<ReactMarkdown
+					remarkPlugins={[remarkGfm]}
+					rehypePlugins={[rehypeRaw]}
+				>
+					{post.content}
+				</ReactMarkdown>
 			</motion.article>
 		</div>
 	);
