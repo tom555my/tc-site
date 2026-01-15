@@ -154,6 +154,7 @@ full-stack developer, AI developer, data science engineer, React, TypeScript, Cl
 
 ## Additional Resources
 
+- CV/Resume: https://tommy-chung.com/cv.pdf
 - Favicon: https://tommy-chung.com/favicon.svg
 - Apple Touch Icon: https://tommy-chung.com/apple-touch-icon.svg
 
