@@ -13,6 +13,10 @@ export default {
 	ssr: true,
 	prerender: ['/', '/blog', ...blogSlugs.map((slug) => `/blog/${slug}`)],
 	future: {
+		v8_middleware: true,
+		v8_splitRouteModules: true,
 		v8_viteEnvironmentApi: true,
+		v8_passThroughRequests: true,
+		v8_trailingSlashAwareDataRequests: true,
 	},
 } satisfies Config;
