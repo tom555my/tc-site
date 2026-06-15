@@ -1,8 +1,8 @@
 ---
-title: "Mastering Framer Motion: Spring Physics for Natural Animations"
-date: "2026-01-12"
-excerpt: "Deep dive into creating natural, physics-based animations with Framer Motion. Learn spring configurations, variants, and performance optimization techniques."
-tags: ["react", "animation", "framer-motion", "ux"]
+title: 'Mastering Framer Motion: Spring Physics for Natural Animations'
+date: '2026-01-12'
+excerpt: 'Deep dive into creating natural, physics-based animations with Framer Motion. Learn spring configurations, variants, and performance optimization techniques.'
+tags: ['react', 'animation', 'framer-motion', 'ux']
 ---
 
 # Mastering Framer Motion: Spring Physics for Natural Animations
@@ -81,59 +81,59 @@ const heavy = { stiffness: 300, damping: 20, mass: 1.5 };
 ```typescript
 // lib/animations.ts
 export const springs = {
-  // Entrance animations - gentle and welcoming
-  gentle: {
-    type: 'spring' as const,
-    stiffness: 100,
-    damping: 15,
-    mass: 0.5,
-  },
+	// Entrance animations - gentle and welcoming
+	gentle: {
+		type: 'spring' as const,
+		stiffness: 100,
+		damping: 15,
+		mass: 0.5,
+	},
 
-  // Interactive elements - responsive and playful
-  bouncy: {
-    type: 'spring' as const,
-    stiffness: 300,
-    damping: 20,
-    mass: 0.8,
-  },
+	// Interactive elements - responsive and playful
+	bouncy: {
+		type: 'spring' as const,
+		stiffness: 300,
+		damping: 20,
+		mass: 0.8,
+	},
 
-  // Micro-interactions - quick and snappy
-  snappy: {
-    type: 'spring' as const,
-    stiffness: 400,
-    damping: 30,
-    mass: 0.5,
-  },
+	// Micro-interactions - quick and snappy
+	snappy: {
+		type: 'spring' as const,
+		stiffness: 400,
+		damping: 30,
+		mass: 0.5,
+	},
 
-  // Heavy elements - dramatic and weighty
-  heavy: {
-    type: 'spring' as const,
-    stiffness: 200,
-    damping: 25,
-    mass: 1.2,
-  },
+	// Heavy elements - dramatic and weighty
+	heavy: {
+		type: 'spring' as const,
+		stiffness: 200,
+		damping: 25,
+		mass: 1.2,
+	},
 } as const;
 
 // Entrance animations
 export const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: springs.gentle },
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: springs.gentle },
 };
 
 export const fadeInScale = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1, transition: springs.gentle },
+	hidden: { opacity: 0, scale: 0.9 },
+	visible: { opacity: 1, scale: 1, transition: springs.gentle },
 };
 
 // Hover animations
 export const hoverLift = {
-  rest: { y: 0 },
-  hover: { y: -4, transition: springs.snappy },
+	rest: { y: 0 },
+	hover: { y: -4, transition: springs.snappy },
 };
 
 export const hoverScale = {
-  rest: { scale: 1 },
-  hover: { scale: 1.05, transition: springs.bouncy },
+	rest: { scale: 1 },
+	hover: { scale: 1.05, transition: springs.bouncy },
 };
 ```
 

@@ -1,8 +1,8 @@
 ---
-title: "Building Full-Stack Apps on Cloudflare: Workers, D1, and KV"
-date: "2026-01-11"
+title: 'Building Full-Stack Apps on Cloudflare: Workers, D1, and KV'
+date: '2026-01-11'
 excerpt: "A comprehensive guide to building modern full-stack applications using Cloudflare's edge platform, from serverless functions to distributed databases."
-tags: ["cloudflare", "serverless", "edge", "d1", "workers"]
+tags: ['cloudflare', 'serverless', 'edge', 'd1', 'workers']
 ---
 
 # Building Full-Stack Apps on Cloudflare
@@ -75,58 +75,60 @@ bucket_name = "my-app-storage"
 ```typescript
 // src/index.ts
 export interface Env {
-  DB: D1Database;
-  CACHE: KVNamespace;
-  STORAGE: R2Bucket;
+	DB: D1Database;
+	CACHE: KVNamespace;
+	STORAGE: R2Bucket;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
 
-    if (url.pathname === '/api/users') {
-      return handleUsers(request, env);
-    }
+		if (url.pathname === '/api/users') {
+			return handleUsers(request, env);
+		}
 
-    return new Response('Not Found', { status: 404 });
-  },
+		return new Response('Not Found', { status: 404 });
+	},
 };
 
 async function handleUsers(request: Request, env: Env) {
-  if (request.method === 'GET') {
-    // Check cache first
-    const cached = await env.CACHE.get('users', 'json');
-    if (cached) {
-      return Response.json(cached);
-    }
+	if (request.method === 'GET') {
+		// Check cache first
+		const cached = await env.CACHE.get('users', 'json');
+		if (cached) {
+			return Response.json(cached);
+		}
 
-    // Query database
-    const { results } = await env.DB.prepare(
-      'SELECT * FROM users ORDER BY created_at DESC LIMIT 10'
-    ).all();
+		// Query database
+		const { results } = await env.DB.prepare(
+			'SELECT * FROM users ORDER BY created_at DESC LIMIT 10',
+		).all();
 
-    // Cache for 5 minutes
-    await env.CACHE.put('users', JSON.stringify(results), {
-      expirationTtl: 300,
-    });
+		// Cache for 5 minutes
+		await env.CACHE.put('users', JSON.stringify(results), {
+			expirationTtl: 300,
+		});
 
-    return Response.json(results);
-  }
+		return Response.json(results);
+	}
 
-  if (request.method === 'POST') {
-    const user = await request.json();
+	if (request.method === 'POST') {
+		const user = await request.json();
 
-    const result = await env.DB.prepare(
-      'INSERT INTO users (name, email) VALUES (?, ?)'
-    ).bind(user.name, user.email).run();
+		const result = await env.DB.prepare(
+			'INSERT INTO users (name, email) VALUES (?, ?)',
+		)
+			.bind(user.name, user.email)
+			.run();
 
-    // Invalidate cache
-    await env.CACHE.delete('users');
+		// Invalidate cache
+		await env.CACHE.delete('users');
 
-    return Response.json({ id: result.meta.last_row_id });
-  }
+		return Response.json({ id: result.meta.last_row_id });
+	}
 
-  return new Response('Method Not Allowed', { status: 405 });
+	return new Response('Method Not Allowed', { status: 405 });
 }
 ```
 
@@ -167,29 +169,29 @@ import { drizzle } from 'drizzle-orm/d1';
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
 const users = sqliteTable('users', {
-  id: integer('id').primaryKey(),
-  name: text('name').notNull(),
-  email: text('email').notNull().unique(),
+	id: integer('id').primaryKey(),
+	name: text('name').notNull(),
+	email: text('email').notNull().unique(),
 });
 
 export async function getUser(env: Env, id: number) {
-  const db = drizzle(env.DB);
+	const db = drizzle(env.DB);
 
-  return await db
-    .select()
-    .from(users)
-    .where(eq(users.id, id))
-    .get();
+	return await db.select().from(users).where(eq(users.id, id)).get();
 }
 
 // Transactions
 export async function createUserWithProfile(env: Env, data: UserData) {
-  return await env.DB.batch([
-    env.DB.prepare('INSERT INTO users (name, email) VALUES (?, ?)')
-      .bind(data.name, data.email),
-    env.DB.prepare('INSERT INTO profiles (user_id, bio) VALUES (?, ?)')
-      .bind(data.userId, data.bio),
-  ]);
+	return await env.DB.batch([
+		env.DB.prepare('INSERT INTO users (name, email) VALUES (?, ?)').bind(
+			data.name,
+			data.email,
+		),
+		env.DB.prepare('INSERT INTO profiles (user_id, bio) VALUES (?, ?)').bind(
+			data.userId,
+			data.bio,
+		),
+	]);
 }
 ```
 
@@ -202,20 +204,21 @@ const user = await stmt.bind(id).first();
 
 // ✅ Batch queries
 const [users, posts] = await env.DB.batch([
-  env.DB.prepare('SELECT * FROM users'),
-  env.DB.prepare('SELECT * FROM posts'),
+	env.DB.prepare('SELECT * FROM users'),
+	env.DB.prepare('SELECT * FROM posts'),
 ]);
 
 // ❌ Avoid N+1 queries
 // Bad: Query for each user
 for (const userId of userIds) {
-  await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userId).first();
+	await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userId).first();
 }
 
 // Good: Single query with IN clause
 const placeholders = userIds.map(() => '?').join(',');
 await env.DB.prepare(`SELECT * FROM users WHERE id IN (${placeholders})`)
-  .bind(...userIds).all();
+	.bind(...userIds)
+	.all();
 ```
 
 ## KV Store Patterns
@@ -230,52 +233,54 @@ KV is perfect for:
 ```typescript
 // Caching with TTL
 async function getCachedOrFetch<T>(
-  cache: KVNamespace,
-  key: string,
-  fetcher: () => Promise<T>,
-  ttl: number = 3600
+	cache: KVNamespace,
+	key: string,
+	fetcher: () => Promise<T>,
+	ttl: number = 3600,
 ): Promise<T> {
-  const cached = await cache.get<T>(key, 'json');
-  if (cached) return cached;
+	const cached = await cache.get<T>(key, 'json');
+	if (cached) return cached;
 
-  const fresh = await fetcher();
-  await cache.put(key, JSON.stringify(fresh), { expirationTtl: ttl });
+	const fresh = await fetcher();
+	await cache.put(key, JSON.stringify(fresh), { expirationTtl: ttl });
 
-  return fresh;
+	return fresh;
 }
 
 // Rate limiting
 async function isRateLimited(
-  cache: KVNamespace,
-  identifier: string,
-  limit: number = 100,
-  window: number = 3600
+	cache: KVNamespace,
+	identifier: string,
+	limit: number = 100,
+	window: number = 3600,
 ): Promise<boolean> {
-  const key = `rate_limit:${identifier}`;
-  const current = await cache.get<number>(key, 'json') || 0;
+	const key = `rate_limit:${identifier}`;
+	const current = (await cache.get<number>(key, 'json')) || 0;
 
-  if (current >= limit) return true;
+	if (current >= limit) return true;
 
-  await cache.put(key, String(current + 1), { expirationTtl: window });
-  return false;
+	await cache.put(key, String(current + 1), { expirationTtl: window });
+	return false;
 }
 
 // Feature flags
 interface FeatureFlags {
-  newUI: boolean;
-  betaFeatures: boolean;
+	newUI: boolean;
+	betaFeatures: boolean;
 }
 
 async function getFeatureFlags(
-  cache: KVNamespace,
-  userId: string
+	cache: KVNamespace,
+	userId: string,
 ): Promise<FeatureFlags> {
-  const flags = await cache.get<FeatureFlags>(`flags:${userId}`, 'json');
+	const flags = await cache.get<FeatureFlags>(`flags:${userId}`, 'json');
 
-  return flags || {
-    newUI: false,
-    betaFeatures: false,
-  };
+	return (
+		flags || {
+			newUI: false,
+			betaFeatures: false,
+		}
+	);
 }
 ```
 
@@ -286,52 +291,50 @@ R2 is S3-compatible object storage with zero egress fees:
 ```typescript
 // Upload file
 async function uploadFile(
-  storage: R2Bucket,
-  key: string,
-  file: File
+	storage: R2Bucket,
+	key: string,
+	file: File,
 ): Promise<void> {
-  await storage.put(key, file.stream(), {
-    httpMetadata: {
-      contentType: file.type,
-    },
-    customMetadata: {
-      uploadedBy: 'user-123',
-      timestamp: Date.now().toString(),
-    },
-  });
+	await storage.put(key, file.stream(), {
+		httpMetadata: {
+			contentType: file.type,
+		},
+		customMetadata: {
+			uploadedBy: 'user-123',
+			timestamp: Date.now().toString(),
+		},
+	});
 }
 
 // Download file with caching
-async function downloadFile(
-  storage: R2Bucket,
-  key: string
-): Promise<Response> {
-  const object = await storage.get(key);
+async function downloadFile(storage: R2Bucket, key: string): Promise<Response> {
+	const object = await storage.get(key);
 
-  if (!object) {
-    return new Response('Not Found', { status: 404 });
-  }
+	if (!object) {
+		return new Response('Not Found', { status: 404 });
+	}
 
-  return new Response(object.body, {
-    headers: {
-      'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
-      'Cache-Control': 'public, max-age=31536000',
-      'ETag': object.httpEtag,
-    },
-  });
+	return new Response(object.body, {
+		headers: {
+			'Content-Type':
+				object.httpMetadata?.contentType || 'application/octet-stream',
+			'Cache-Control': 'public, max-age=31536000',
+			ETag: object.httpEtag,
+		},
+	});
 }
 
 // List files with pagination
 async function listFiles(
-  storage: R2Bucket,
-  prefix: string = '',
-  cursor?: string
+	storage: R2Bucket,
+	prefix: string = '',
+	cursor?: string,
 ): Promise<R2Objects> {
-  return await storage.list({
-    prefix,
-    limit: 100,
-    cursor,
-  });
+	return await storage.list({
+		prefix,
+		limit: 100,
+		cursor,
+	});
 }
 ```
 
@@ -344,39 +347,39 @@ const secret = new TextEncoder().encode(env.JWT_SECRET);
 
 // Generate token
 async function createToken(userId: string): Promise<string> {
-  return await new SignJWT({ userId })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setIssuedAt()
-    .setExpirationTime('24h')
-    .sign(secret);
+	return await new SignJWT({ userId })
+		.setProtectedHeader({ alg: 'HS256' })
+		.setIssuedAt()
+		.setExpirationTime('24h')
+		.sign(secret);
 }
 
 // Verify token
 async function verifyToken(token: string): Promise<string | null> {
-  try {
-    const { payload } = await jwtVerify(token, secret);
-    return payload.userId as string;
-  } catch {
-    return null;
-  }
+	try {
+		const { payload } = await jwtVerify(token, secret);
+		return payload.userId as string;
+	} catch {
+		return null;
+	}
 }
 
 // Middleware
 async function authMiddleware(request: Request, env: Env) {
-  const authHeader = request.headers.get('Authorization');
-  const token = authHeader?.replace('Bearer ', '');
+	const authHeader = request.headers.get('Authorization');
+	const token = authHeader?.replace('Bearer ', '');
 
-  if (!token) {
-    return new Response('Unauthorized', { status: 401 });
-  }
+	if (!token) {
+		return new Response('Unauthorized', { status: 401 });
+	}
 
-  const userId = await verifyToken(token);
+	const userId = await verifyToken(token);
 
-  if (!userId) {
-    return new Response('Invalid token', { status: 401 });
-  }
+	if (!userId) {
+		return new Response('Invalid token', { status: 401 });
+	}
 
-  return userId;
+	return userId;
 }
 ```
 
@@ -401,26 +404,26 @@ wrangler dev
 ```typescript
 // Add analytics
 export default {
-  async fetch(request: Request, env: Env) {
-    const start = Date.now();
+	async fetch(request: Request, env: Env) {
+		const start = Date.now();
 
-    try {
-      const response = await handleRequest(request, env);
+		try {
+			const response = await handleRequest(request, env);
 
-      // Log metrics
-      console.log({
-        path: new URL(request.url).pathname,
-        method: request.method,
-        status: response.status,
-        duration: Date.now() - start,
-      });
+			// Log metrics
+			console.log({
+				path: new URL(request.url).pathname,
+				method: request.method,
+				status: response.status,
+				duration: Date.now() - start,
+			});
 
-      return response;
-    } catch (error) {
-      console.error('Request failed:', error);
-      return new Response('Internal Server Error', { status: 500 });
-    }
-  },
+			return response;
+		} catch (error) {
+			console.error('Request failed:', error);
+			return new Response('Internal Server Error', { status: 500 });
+		}
+	},
 };
 ```
 

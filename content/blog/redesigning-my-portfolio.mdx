@@ -1,8 +1,8 @@
 ---
-title: "Redesigning My Portfolio: From Static to Interactive"
-date: "2026-01-10"
-excerpt: "The story behind rebuilding my portfolio website with React Router 7, Tailwind CSS 4, and Framer Motion. Lessons learned and design decisions explained."
-tags: ["portfolio", "design", "react-router", "tailwind"]
+title: 'Redesigning My Portfolio: From Static to Interactive'
+date: '2026-01-10'
+excerpt: 'The story behind rebuilding my portfolio website with React Router 7, Tailwind CSS 4, and Framer Motion. Lessons learned and design decisions explained.'
+tags: ['portfolio', 'design', 'react-router', 'tailwind']
 ---
 
 # Redesigning My Portfolio: From Static to Interactive
@@ -83,9 +83,9 @@ The new `@theme` directive is a game-changer:
 
 ```css
 @theme {
-  --color-primary: #e36414;
-  --color-surface-1: #0a0a0a;
-  --shadow-glow: 0 0 15px rgba(227, 100, 20, 0.2);
+	--color-primary: #e36414;
+	--color-surface-1: #0a0a0a;
+	--shadow-glow: 0 0 15px rgba(227, 100, 20, 0.2);
 }
 ```
 
@@ -138,19 +138,19 @@ Every animation serves a purpose:
 ```typescript
 // Entrance animations - welcoming and smooth
 const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: springs.gentle },
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: springs.gentle },
 };
 
 // Hover effects - playful and responsive
 const hoverLift = {
-  hover: { y: -4, transition: springs.snappy },
+	hover: { y: -4, transition: springs.snappy },
 };
 
 // Micro-interactions - quick feedback
 const tapScale = {
-  scale: 0.98,
-  transition: springs.snappy,
+	scale: 0.98,
+	transition: springs.snappy,
 };
 ```
 
@@ -254,7 +254,7 @@ This keeps animations at 60fps even on low-end devices.
 ```typescript
 // Cache blog posts for 1 hour
 export const headers = () => ({
-  'Cache-Control': 'public, max-age=3600',
+	'Cache-Control': 'public, max-age=3600',
 });
 ```
 

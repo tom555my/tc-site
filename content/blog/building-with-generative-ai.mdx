@@ -1,8 +1,8 @@
 ---
-title: "Building Production-Ready Generative AI Applications"
-date: "2026-01-13"
-excerpt: "Lessons learned from building conversational AI systems with OpenAI GPT-4, Claude, and LangChain in production environments."
-tags: ["ai", "llm", "openai", "claude", "langchain"]
+title: 'Building Production-Ready Generative AI Applications'
+date: '2026-01-13'
+excerpt: 'Lessons learned from building conversational AI systems with OpenAI GPT-4, Claude, and LangChain in production environments.'
+tags: ['ai', 'llm', 'openai', 'claude', 'langchain']
 ---
 
 # Building Production-Ready Generative AI Applications
@@ -19,50 +19,53 @@ import Anthropic from '@anthropic-ai/sdk';
 import { createOpenAI } from '@ai-sdk/openai';
 
 interface ChatMessage {
-  role: 'user' | 'assistant' | 'system';
-  content: string;
+	role: 'user' | 'assistant' | 'system';
+	content: string;
 }
 
 export class ChatService {
-  private anthropic: Anthropic;
-  private openai: ReturnType<typeof createOpenAI>;
+	private anthropic: Anthropic;
+	private openai: ReturnType<typeof createOpenAI>;
 
-  constructor() {
-    this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-    });
-    this.openai = createOpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-  }
+	constructor() {
+		this.anthropic = new Anthropic({
+			apiKey: process.env.ANTHROPIC_API_KEY,
+		});
+		this.openai = createOpenAI({
+			apiKey: process.env.OPENAI_API_KEY,
+		});
+	}
 
-  async chat(messages: ChatMessage[], provider: 'anthropic' | 'openai' = 'anthropic') {
-    if (provider === 'anthropic') {
-      return this.chatWithClaude(messages);
-    }
-    return this.chatWithGPT(messages);
-  }
+	async chat(
+		messages: ChatMessage[],
+		provider: 'anthropic' | 'openai' = 'anthropic',
+	) {
+		if (provider === 'anthropic') {
+			return this.chatWithClaude(messages);
+		}
+		return this.chatWithGPT(messages);
+	}
 
-  private async chatWithClaude(messages: ChatMessage[]) {
-    const response = await this.anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 4096,
-      messages: messages.map(msg => ({
-        role: msg.role === 'system' ? 'assistant' : msg.role,
-        content: msg.content,
-      })),
-    });
+	private async chatWithClaude(messages: ChatMessage[]) {
+		const response = await this.anthropic.messages.create({
+			model: 'claude-3-5-sonnet-20241022',
+			max_tokens: 4096,
+			messages: messages.map((msg) => ({
+				role: msg.role === 'system' ? 'assistant' : msg.role,
+				content: msg.content,
+			})),
+		});
 
-    return response.content[0].text;
-  }
+		return response.content[0].text;
+	}
 
-  private async chatWithGPT(messages: ChatMessage[]) {
-    const response = await this.openai('gpt-4o').chat({
-      messages,
-    });
+	private async chatWithGPT(messages: ChatMessage[]) {
+		const response = await this.openai('gpt-4o').chat({
+			messages,
+		});
 
-    return response.text;
-  }
+		return response.text;
+	}
 }
 ```
 
@@ -74,21 +77,21 @@ LLM APIs can fail. Always have a fallback strategy:
 
 ```typescript
 async function robustChat(messages: ChatMessage[]) {
-  try {
-    // Try primary provider
-    return await chatService.chat(messages, 'anthropic');
-  } catch (error) {
-    console.error('Anthropic failed, falling back to OpenAI:', error);
+	try {
+		// Try primary provider
+		return await chatService.chat(messages, 'anthropic');
+	} catch (error) {
+		console.error('Anthropic failed, falling back to OpenAI:', error);
 
-    try {
-      // Fallback to secondary provider
-      return await chatService.chat(messages, 'openai');
-    } catch (fallbackError) {
-      console.error('All providers failed:', fallbackError);
-      // Return graceful error message
-      return "I'm having trouble connecting right now. Please try again.";
-    }
-  }
+		try {
+			// Fallback to secondary provider
+			return await chatService.chat(messages, 'openai');
+		} catch (fallbackError) {
+			console.error('All providers failed:', fallbackError);
+			// Return graceful error message
+			return "I'm having trouble connecting right now. Please try again.";
+		}
+	}
 }
 ```
 
@@ -100,22 +103,22 @@ Users expect real-time responses. Streaming is essential:
 import { streamText } from 'ai';
 
 export async function POST(request: Request) {
-  const { messages } = await request.json();
+	const { messages } = await request.json();
 
-  const result = streamText({
-    model: openai('gpt-4o'),
-    messages,
-    onFinish: async ({ text, usage }) => {
-      // Log usage for cost tracking
-      await logUsage({
-        tokens: usage.totalTokens,
-        cost: calculateCost(usage),
-        timestamp: new Date(),
-      });
-    },
-  });
+	const result = streamText({
+		model: openai('gpt-4o'),
+		messages,
+		onFinish: async ({ text, usage }) => {
+			// Log usage for cost tracking
+			await logUsage({
+				tokens: usage.totalTokens,
+				cost: calculateCost(usage),
+				timestamp: new Date(),
+			});
+		},
+	});
 
-  return result.toDataStreamResponse();
+	return result.toDataStreamResponse();
 }
 ```
 
@@ -125,25 +128,28 @@ Track every request:
 
 ```typescript
 interface UsageLog {
-  timestamp: Date;
-  model: string;
-  inputTokens: number;
-  outputTokens: number;
-  cost: number;
-  userId: string;
+	timestamp: Date;
+	model: string;
+	inputTokens: number;
+	outputTokens: number;
+	cost: number;
+	userId: string;
 }
 
-function calculateCost(usage: { inputTokens: number; outputTokens: number }, model: string) {
-  const pricing = {
-    'gpt-4o': { input: 0.005, output: 0.015 }, // per 1K tokens
-    'claude-3-5-sonnet': { input: 0.003, output: 0.015 },
-  };
+function calculateCost(
+	usage: { inputTokens: number; outputTokens: number },
+	model: string,
+) {
+	const pricing = {
+		'gpt-4o': { input: 0.005, output: 0.015 }, // per 1K tokens
+		'claude-3-5-sonnet': { input: 0.003, output: 0.015 },
+	};
 
-  const rates = pricing[model];
-  return (
-    (usage.inputTokens / 1000) * rates.input +
-    (usage.outputTokens / 1000) * rates.output
-  );
+	const rates = pricing[model];
+	return (
+		(usage.inputTokens / 1000) * rates.input +
+		(usage.outputTokens / 1000) * rates.output
+	);
 }
 ```
 
@@ -156,20 +162,20 @@ import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 
 const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(10, '1 m'), // 10 requests per minute
-  analytics: true,
+	redis: Redis.fromEnv(),
+	limiter: Ratelimit.slidingWindow(10, '1 m'), // 10 requests per minute
+	analytics: true,
 });
 
 export async function middleware(request: Request) {
-  const ip = request.headers.get('x-forwarded-for') ?? 'anonymous';
-  const { success } = await ratelimit.limit(ip);
+	const ip = request.headers.get('x-forwarded-for') ?? 'anonymous';
+	const { success } = await ratelimit.limit(ip);
 
-  if (!success) {
-    return new Response('Rate limit exceeded', { status: 429 });
-  }
+	if (!success) {
+		return new Response('Rate limit exceeded', { status: 429 });
+	}
 
-  return NextResponse.next();
+	return NextResponse.next();
 }
 ```
 
@@ -199,14 +205,14 @@ Available tools:
 import { z } from 'zod';
 
 const ResponseSchema = z.object({
-  sentiment: z.enum(['positive', 'neutral', 'negative']),
-  category: z.enum(['technical', 'billing', 'general']),
-  urgency: z.enum(['low', 'medium', 'high']),
-  response: z.string(),
+	sentiment: z.enum(['positive', 'neutral', 'negative']),
+	category: z.enum(['technical', 'billing', 'general']),
+	urgency: z.enum(['low', 'medium', 'high']),
+	response: z.string(),
 });
 
 const response = await chatService.chat(messages, {
-  responseFormat: { type: 'json_object' },
+	responseFormat: { type: 'json_object' },
 });
 
 const parsed = ResponseSchema.parse(JSON.parse(response));
@@ -216,47 +222,47 @@ const parsed = ResponseSchema.parse(JSON.parse(response));
 
 ```typescript
 class AIError extends Error {
-  constructor(
-    message: string,
-    public readonly code: 'RATE_LIMIT' | 'INVALID_REQUEST' | 'API_ERROR',
-    public readonly retryable: boolean
-  ) {
-    super(message);
-    this.name = 'AIError';
-  }
+	constructor(
+		message: string,
+		public readonly code: 'RATE_LIMIT' | 'INVALID_REQUEST' | 'API_ERROR',
+		public readonly retryable: boolean,
+	) {
+		super(message);
+		this.name = 'AIError';
+	}
 }
 
 async function handleAIRequest(messages: ChatMessage[]) {
-  let attempts = 0;
-  const maxAttempts = 3;
+	let attempts = 0;
+	const maxAttempts = 3;
 
-  while (attempts < maxAttempts) {
-    try {
-      return await chatService.chat(messages);
-    } catch (error) {
-      attempts++;
+	while (attempts < maxAttempts) {
+		try {
+			return await chatService.chat(messages);
+		} catch (error) {
+			attempts++;
 
-      if (error.status === 429) {
-        // Rate limit - exponential backoff
-        await new Promise(resolve =>
-          setTimeout(resolve, Math.pow(2, attempts) * 1000)
-        );
-        continue;
-      }
+			if (error.status === 429) {
+				// Rate limit - exponential backoff
+				await new Promise((resolve) =>
+					setTimeout(resolve, Math.pow(2, attempts) * 1000),
+				);
+				continue;
+			}
 
-      if (error.status >= 500) {
-        // Server error - retry
-        if (attempts < maxAttempts) continue;
-      }
+			if (error.status >= 500) {
+				// Server error - retry
+				if (attempts < maxAttempts) continue;
+			}
 
-      // Client error or max attempts reached
-      throw new AIError(
-        error.message,
-        error.status === 429 ? 'RATE_LIMIT' : 'API_ERROR',
-        error.status === 429 || error.status >= 500
-      );
-    }
-  }
+			// Client error or max attempts reached
+			throw new AIError(
+				error.message,
+				error.status === 429 ? 'RATE_LIMIT' : 'API_ERROR',
+				error.status === 429 || error.status >= 500,
+			);
+		}
+	}
 }
 ```
 
@@ -270,23 +276,21 @@ import { Redis } from '@upstash/redis';
 const redis = Redis.fromEnv();
 
 async function getCachedOrGenerate(prompt: string) {
-  const cacheKey = `ai:response:${hashPrompt(prompt)}`;
+	const cacheKey = `ai:response:${hashPrompt(prompt)}`;
 
-  // Check cache
-  const cached = await redis.get(cacheKey);
-  if (cached) {
-    return cached;
-  }
+	// Check cache
+	const cached = await redis.get(cacheKey);
+	if (cached) {
+		return cached;
+	}
 
-  // Generate new response
-  const response = await chatService.chat([
-    { role: 'user', content: prompt }
-  ]);
+	// Generate new response
+	const response = await chatService.chat([{ role: 'user', content: prompt }]);
 
-  // Cache for 1 hour
-  await redis.set(cacheKey, response, { ex: 3600 });
+	// Cache for 1 hour
+	await redis.set(cacheKey, response, { ex: 3600 });
 
-  return response;
+	return response;
 }
 ```
 
@@ -294,14 +298,14 @@ async function getCachedOrGenerate(prompt: string) {
 
 ```typescript
 async function processMultipleQueries(queries: string[]) {
-  // Process up to 5 queries in parallel
-  const results = await Promise.all(
-    queries.map(query =>
-      chatService.chat([{ role: 'user', content: query }])
-    )
-  );
+	// Process up to 5 queries in parallel
+	const results = await Promise.all(
+		queries.map((query) =>
+			chatService.chat([{ role: 'user', content: query }]),
+		),
+	);
 
-  return results;
+	return results;
 }
 ```
 
@@ -321,26 +325,26 @@ import { trace } from '@opentelemetry/api';
 const tracer = trace.getTracer('ai-service');
 
 async function trackedChat(messages: ChatMessage[]) {
-  return tracer.startActiveSpan('ai.chat', async (span) => {
-    const startTime = Date.now();
+	return tracer.startActiveSpan('ai.chat', async (span) => {
+		const startTime = Date.now();
 
-    try {
-      const response = await chatService.chat(messages);
+		try {
+			const response = await chatService.chat(messages);
 
-      span.setAttributes({
-        'ai.model': 'claude-3-5-sonnet',
-        'ai.input_tokens': calculateTokens(messages),
-        'ai.latency_ms': Date.now() - startTime,
-      });
+			span.setAttributes({
+				'ai.model': 'claude-3-5-sonnet',
+				'ai.input_tokens': calculateTokens(messages),
+				'ai.latency_ms': Date.now() - startTime,
+			});
 
-      return response;
-    } catch (error) {
-      span.recordException(error);
-      throw error;
-    } finally {
-      span.end();
-    }
-  });
+			return response;
+		} catch (error) {
+			span.recordException(error);
+			throw error;
+		} finally {
+			span.end();
+		}
+	});
 }
 ```
 

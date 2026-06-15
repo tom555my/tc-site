@@ -11,12 +11,9 @@ export async function loader() {
 		/>
 	);
 
-	return new ImageResponse(
-		ogImgEl,
-		{
-			width: 1200,
-			height: 630,
-			fonts: await getOgImageFonts(),
-		},
-	);
+	return new ImageResponse(ogImgEl, {
+		width: 1200,
+		height: 630,
+		fonts: await getOgImageFonts(),
+	});
 }

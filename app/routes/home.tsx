@@ -78,7 +78,7 @@ export default function Home() {
 				>
 					Blog
 				</Link>
-        <a
+				<a
 					href="/llms.txt"
 					className="text-sm text-muted hover:text-white transition-colors ml-auto"
 				>

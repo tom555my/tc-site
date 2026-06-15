@@ -8,15 +8,15 @@ import {
 } from '../lib/animations';
 
 const projects: {
-  title: string;
-  description: string;
-  status: 'Live' | 'Completed' | 'In Progress';
-  tags: string[];
-  type: 'Freelance' | 'Side Project' | 'Work Project';
-  links?: {
-    demo?: string;
-    github?: string;
-  }
+	title: string;
+	description: string;
+	status: 'Live' | 'Completed' | 'In Progress';
+	tags: string[];
+	type: 'Freelance' | 'Side Project' | 'Work Project';
+	links?: {
+		demo?: string;
+		github?: string;
+	};
 }[] = [
 	{
 		title: 'Amoeba 28 (Luxury Marketplace App)',
@@ -25,9 +25,9 @@ const projects: {
 		status: 'Completed',
 		tags: ['Expo', 'React Native', 'Hasura', 'Postgresql'],
 		type: 'Freelance',
-    links: {
-      demo: 'https://apps.apple.com/us/app/amoeba-28/id1630974085'
-    }
+		links: {
+			demo: 'https://apps.apple.com/us/app/amoeba-28/id1630974085',
+		},
 	},
 	{
 		title: 'Splity.io (Group Expenses Calculator)',

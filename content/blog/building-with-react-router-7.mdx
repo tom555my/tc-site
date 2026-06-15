@@ -1,8 +1,8 @@
 ---
-title: "Building with React Router 7: SSR Made Simple"
-date: "2026-01-14"
+title: 'Building with React Router 7: SSR Made Simple'
+date: '2026-01-14'
 excerpt: "A deep dive into React Router 7's server-side rendering capabilities and how it simplifies building fast, SEO-friendly React applications."
-tags: ["react", "react-router", "ssr", "performance"]
+tags: ['react', 'react-router', 'ssr', 'performance']
 ---
 
 # Building with React Router 7
@@ -29,13 +29,13 @@ pnpm create react-router@latest
 Configure SSR in your `react-router.config.ts`:
 
 ```typescript
-import type { Config } from "@react-router/dev/config";
+import type { Config } from '@react-router/dev/config';
 
 export default {
-  ssr: true,
-  future: {
-    v8_viteEnvironmentApi: true,
-  },
+	ssr: true,
+	future: {
+		v8_viteEnvironmentApi: true,
+	},
 } satisfies Config;
 ```
 
