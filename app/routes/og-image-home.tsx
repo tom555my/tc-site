@@ -1,7 +1,7 @@
-import { ImageResponse } from 'workers-og';
 import OgImage, { getOgImageFonts } from '~/components/OgImage';
 
 export async function loader() {
+	const { ImageResponse } = await import('workers-og');
 	const ogImgEl = (
 		<OgImage
 			title="Tommy Chung"

@@ -1,4 +1,3 @@
-import { ImageResponse } from 'workers-og';
 import OgImage, { getOgImageFonts } from '~/components/OgImage';
 import { getPostBySlug } from '../lib/blog.server';
 
@@ -9,6 +8,7 @@ interface LoaderArgs {
 }
 
 export async function loader({ params }: LoaderArgs) {
+	const { ImageResponse } = await import('workers-og');
 	const post = await getPostBySlug(params.slug);
 
 	if (!post) {

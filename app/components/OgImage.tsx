@@ -1,6 +1,5 @@
-import { loadGoogleFont } from 'workers-og';
-
 export const getOgImageFonts = async () => {
+	const { loadGoogleFont } = await import('workers-og');
 	const googleSans400 = await loadGoogleFont({
 		family: 'Google Sans Flex',
 		weight: 400,

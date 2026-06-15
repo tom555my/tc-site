@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Globe } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import { fadeInUp, slideInRight, springs, tapScale } from '../lib/animations';
 
 const socialLinks = [
-	{ icon: Globe, href: 'https://tommy-chung.com', label: 'website' },
 	{ icon: Mail, href: 'mailto:tc@tommy-chung.com', label: 'email' },
 	{ icon: Github, href: 'https://github.com/tom555my', label: 'github' },
 	{

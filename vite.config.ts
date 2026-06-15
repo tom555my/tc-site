@@ -2,7 +2,6 @@ import { reactRouter } from '@react-router/dev/vite';
 import { cloudflare } from '@cloudflare/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import mdx from '@mdx-js/rollup';
 import rehypePrettyCode from 'rehype-pretty-code';
 import fs from 'node:fs';
@@ -55,6 +54,9 @@ function blogPostsPlugin() {
 }
 
 export default defineConfig({
+	resolve: {
+		tsconfigPaths: true,
+	},
 	plugins: [
 		cloudflare({ viteEnvironment: { name: 'ssr' } }),
 		tailwindcss(),
@@ -80,6 +82,5 @@ export default defineConfig({
 			],
 		}),
 		reactRouter(),
-		tsconfigPaths(),
 	],
 });
