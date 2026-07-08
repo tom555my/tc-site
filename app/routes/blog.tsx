@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { format } from 'date-fns';
 import { getAllPosts, type BlogPost } from '../lib/blog.server';
 import { fadeInUp, staggerContainer, springs } from '../lib/animations';

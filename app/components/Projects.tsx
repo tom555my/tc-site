@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ExternalLink, Github } from 'lucide-react';
 import {
 	fadeInUp,
@@ -38,6 +38,17 @@ const projects: {
 		type: 'Side Project',
 		links: {
 			demo: 'https://splity.io',
+		},
+	},
+	{
+		title: 'skills-browser',
+		description:
+			'A browser automation toolkit for interacting with and testing web applications using AI agents.',
+		status: 'In Progress',
+		tags: ['Browser', 'AI', 'Automation'],
+		type: 'Side Project',
+		links: {
+			github: 'https://github.com/tom555my/skills-browser',
 		},
 	},
 ];

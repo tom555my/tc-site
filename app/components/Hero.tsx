@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { fadeInUp, slideInRight, springs, tapScale } from '../lib/animations';
 

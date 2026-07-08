@@ -8,7 +8,7 @@
 	"compatibility_date": "2026-04-04",
 	"main": "./workers/app.ts",
 	"vars": {
-		"PNPM_VERSION": "11.5.1",
+		"PNPM_VERSION": "11.10.0",
 	},
 	"compatibility_flags": ["nodejs_compat"],
 	"observability": {
