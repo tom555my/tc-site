@@ -2,12 +2,8 @@
 	"files.associations": {
 		"wrangler.json": "jsonc"
 	},
+	"recommendations": ["oxc.oxc-vscode"],
+	"oxc.fmt.configPath": ".oxfmtrc.json",
 	"editor.defaultFormatter": "oxc.oxc-vscode",
-	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.oxc": "explicit"
-	},
-	"oxc.enable": true,
-	"oxc.formatter.enable": true,
-	"oxc.linter.run": "onType"
+	"editor.formatOnSave": true
 }
