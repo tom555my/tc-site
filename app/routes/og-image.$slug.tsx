@@ -8,7 +8,7 @@ interface LoaderArgs {
 }
 
 export async function loader({ params }: LoaderArgs) {
-	const { ImageResponse } = await import('workers-og');
+	const { ImageResponse } = await import('takumi-js/response');
 	const post = await getPostBySlug(params.slug);
 
 	if (!post) {

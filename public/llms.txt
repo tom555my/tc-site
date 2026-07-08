@@ -121,7 +121,7 @@ Portfolio website and blog for Tommy Chung, a full-stack AI developer and data s
 - Language: TypeScript
 - Build Tool: Vite
 - Blog: MDX (Markdown + JSX)
-- Dynamic OG Images: workers-og
+- Dynamic OG Images: takumi
 
 ## Content Topics
 

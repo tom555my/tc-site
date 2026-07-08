@@ -1,34 +1,11 @@
 export const getOgImageFonts = async () => {
-	const { loadGoogleFont } = await import('workers-og');
-	const googleSans400 = await loadGoogleFont({
-		family: 'Google Sans Flex',
-		weight: 400,
+	const { googleFonts } = await import('takumi-js/helpers');
+	return googleFonts({
+		families: [
+			{ name: 'Google Sans Flex', weight: [400, 600] },
+			{ name: 'Geist Mono', weight: 400 },
+		],
 	});
-	const googleSans600 = await loadGoogleFont({
-		family: 'Google Sans Flex',
-		weight: 600,
-	});
-	const geistMono400 = await loadGoogleFont({
-		family: 'Geist Mono',
-		weight: 400,
-	});
-	return [
-		{
-			name: 'Google Sans Flex',
-			data: googleSans600,
-			weight: 600,
-		},
-		{
-			name: 'Google Sans Flex',
-			data: googleSans400,
-			weight: 400,
-		},
-		{
-			name: 'Geist Mono',
-			data: geistMono400,
-			weight: 400,
-		},
-	];
 };
 
 export default function OgImage({

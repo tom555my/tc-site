@@ -1,7 +1,7 @@
 import OgImage, { getOgImageFonts } from '~/components/OgImage';
 
 export async function loader() {
-	const { ImageResponse } = await import('workers-og');
+	const { ImageResponse } = await import('takumi-js/response');
 	const ogImgEl = (
 		<OgImage
 			title="Blog"
