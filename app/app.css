@@ -112,16 +112,12 @@
 		@apply text-primary hover:underline;
 	}
 
-	.prose code {
+	.prose :not(pre) > code {
 		@apply text-primary bg-white/5 px-1.5 py-0.5 rounded text-sm font-mono;
 	}
 
 	.prose pre {
-		@apply bg-surface-2 border border-white/10 rounded-lg p-4 overflow-x-auto my-6;
-	}
-
-	.prose pre code {
-		@apply bg-transparent p-0 text-sm;
+		@apply overflow-x-auto my-6;
 	}
 
 	.prose blockquote {
@@ -137,13 +133,9 @@
 		@apply text-muted/90;
 	}
 
-	/* Code syntax highlighting */
-	.prose pre [data-line] {
-		@apply px-4 border-l-2 border-transparent;
-	}
-
-	.prose pre [data-line].highlighted {
-		@apply bg-primary/10 border-primary/50;
+	/* Expressive Code block spacing */
+	.prose .expressive-code {
+		@apply my-6;
 	}
 }
 

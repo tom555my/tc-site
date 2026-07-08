@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import {
-	SiAmazonwebservices,
 	SiClaude,
 	SiCloudflare,
 	SiCloudflareworkers,
@@ -43,6 +42,7 @@ import { Conductor } from './icons/conductor';
 import { Langfuse } from './icons/langfuse';
 import { Mastra } from './icons/mastra';
 import { OpenCode } from './icons/opencode';
+import { AmazonWebServices } from './icons/aws';
 
 const skillCategories = [
 	{
@@ -90,7 +90,7 @@ const skillCategories = [
 	{
 		title: 'Cloud & Infrastructure',
 		skills: [
-			{ name: 'AWS (CDK, SQS, S3...)', icon: SiAmazonwebservices },
+			{ name: 'AWS (CDK, SQS, S3...)', icon: AmazonWebServices },
 			{ name: 'SST.dev', icon: SiSst },
 			{ name: 'Docker', icon: SiDocker },
 			{ name: 'Kubernetes', icon: SiKubernetes },

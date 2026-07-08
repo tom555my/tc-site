@@ -7,7 +7,7 @@ declare module 'virtual:blog-posts' {
 		date: string;
 		excerpt: string;
 		tags: string[];
-		content: string;
+		html: string;
 	}
 
 	const posts: BlogPost[];

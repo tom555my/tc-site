@@ -8,7 +8,7 @@ export interface BlogPost {
 	date: string;
 	excerpt: string;
 	tags: string[];
-	content: string;
+	html: string;
 }
 
 export async function getAllPosts(): Promise<BlogPost[]> {

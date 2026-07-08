@@ -6,9 +6,6 @@ import {
 	type BlogPost as BlogPostType,
 } from '../lib/blog.server';
 import { fadeInUp, springs } from '../lib/animations';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 
 interface LoaderArgs {
 	params: {
@@ -153,9 +150,7 @@ export default function BlogPost({ loaderData }: BlogPostProps) {
 					</div>
 				</header>
 
-				<ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-					{post.content}
-				</ReactMarkdown>
+				<div dangerouslySetInnerHTML={{ __html: post.html }} />
 			</motion.article>
 		</div>
 	);
