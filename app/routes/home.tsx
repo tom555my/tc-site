@@ -6,11 +6,11 @@ import { Link } from 'react-router';
 
 export function meta() {
 	return [
-		{ title: 'Tommy Chung | Full-Stack AI Developer & Data Scientist' },
+		{ title: 'Tommy Chung | Full-Stack AI Engineer' },
 		{
 			name: 'description',
 			content:
-				'Senior Data Engineer & full-stack developer building scalable AI solutions. Explore projects, experience, and insights on React, TypeScript, and cloud infrastructure.',
+				'Senior Data Engineer & full-stack developer building scalable AI solutions.',
 		},
 		{
 			name: 'keywords',
@@ -32,7 +32,7 @@ export function meta() {
 		{
 			property: 'og:description',
 			content:
-				'Senior Data Engineer & full-stack developer building scalable AI solutions. Explore projects, experience, and insights on React, TypeScript, and cloud infrastructure.',
+				'Senior Data Engineer & full-stack developer building scalable AI solutions.',
 		},
 		{
 			property: 'og:image',
@@ -48,7 +48,7 @@ export function meta() {
 		},
 		{
 			name: 'twitter:title',
-			content: 'Tommy Chung | Full-Stack AI Developer & Data Scientist',
+			content: 'Tommy Chung | Full-Stack AI Engineer',
 		},
 		{
 			name: 'twitter:description',
